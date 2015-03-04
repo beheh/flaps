@@ -2,9 +2,9 @@
 
 Flaps is a simplistic library for PHP applications to rate limit various requests.
 
-## Why rate limit?
+## Why rate limit?ing
 
-There are many benefits from rate-limiting your web application. At any point in time your web application or API could be hit by a huge number of requests from some clients. This could be:
+There are many benefits from rate limiting your web application. At any point in time your server(s) could be hit by a huge number of requests from one or many clients. These could be:
 - Malicious clients trying to degrade your applications performance
 - Malicious clients bruteforcing user credentials
 - Bugged clients repeating requests over and over again
@@ -12,7 +12,7 @@ There are many benefits from rate-limiting your web application. At any point in
 - Spambots attempting to register a large number of users
 - Spambots attempting to post links to malicious sites
 
-Most of these problems can be solved in a variety of ways, for example by using a spam filter or a fully configured firewall. Rate limiting is nethertheless a basic tool for improving application security, but offers no full protection.
+Most of these problems can be solved in a variety of ways, for example by using a spam filter or a fully configured firewall. Rate limiting is nevertheless a basic tool for improving application security, but offers no full protection.
 
 ## Requirements
 
@@ -21,6 +21,8 @@ Most of these problems can be solved in a variety of ways, for example by using 
 
 ## Basic usage
 
+### Setup
+
 ```php
 use Predis\Client;
 use BehEh\Flaps\Storage\PredisStorage;
@@ -28,11 +30,15 @@ use BehEh\Flaps\Wing;
 
 $storage = new PredisStorage(new Client());
 $wing = new Wing($storage);
-$flap = $wing->getFlap('api'); // limiting access to "api"
+```
 
-$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(10, '5s')); // 10 requests per 5 seconds
-$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(200, '5m')); // 200 requests per 5 minutes
-$flap->limit($_SERVER['HTTP_REMOTE_ADDR']); // add request for this ip and exit with HTTP 429, if limit exceeded
+### Rate limiting
+
+```php
+$flap = $wing->getFlap('api');
+$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(10, '5s'));
+$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(200, '5m'));
+$flap->limit($_SERVER['HTTP_REMOTE_ADDR']);
 ```
 
 Each flap is a certain part of your application you would like to protect. It might be all of your api, certain requests which require authentication or only your login page.
@@ -134,7 +140,7 @@ class CustomViolationHandler implements ViolationHandler {
 
 ### Default violation handler
 
-The `Wing` object can pass a default violation handler the flaps.
+The `Wing` object can pass a default violation handler to the flaps.
 
 ```php
 $flaps->setDefaultViolationHandler(new CustomViolationHandler);
