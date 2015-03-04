@@ -1,0 +1,17 @@
+{
+    "name": "beheh/flaps",
+    "type": "library",
+    "description": "Rate-limiting for PHP",
+    "keywords": ["throttle", "rate limit"],
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Benedict Etzel",
+            "email": "developer@beheh.de",
+            "homepage": "https://beheh.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    }
+}
