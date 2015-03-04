@@ -1,6 +1,6 @@
 <?php
 
-namespace Flaps;
+namespace BehEh\Flaps;
 
 /**
  *

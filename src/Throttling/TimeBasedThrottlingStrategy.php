@@ -1,8 +1,8 @@
 <?php
 
-namespace Flaps\Throttling;
+namespace BehEh\Flaps\Throttling;
 
-use Flaps\ThrottlingStrategyInterface;
+use BehEh\Flaps\ThrottlingStrategyInterface;
 use InvalidArgumentException;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Flaps;
+namespace BehEh\Flaps;
 
-use Flaps\AdapterInterface;
+use BehEh\Flaps\AdapterInterface;
 use Doctrine\Common\Cache\Cache;
 
 /**

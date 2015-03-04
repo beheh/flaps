@@ -1,8 +1,8 @@
 <?php
 
-namespace Flaps\Violation;
+namespace BehEh\Flaps\Violation;
 
-use Flaps\ViolationHandlerInterface;
+use BehEh\Flaps\ViolationHandlerInterface;
 
 /**
  *
