@@ -17,9 +17,11 @@ Most of these problems can be solved in a variety of ways, for example by using 
 ## Basic usage
 
 ```php
-$flaps = new Flaps(new APCAdapter());
+$cache = new Doctrine\Common\Cache\ApcCache();
+$cache->setNamespace('MyApplication');
+$flaps = new Flaps(new DoctrineAdapter($cache));
 $apiFlap = $flaps->getFlap('api');
-$apiFlap->addThrottlingStrategy(new BasicThrottlingStrategy(10, 600));
+$apiFlap->addThrottlingStrategy(new TimeBasedThrottlingStrategy(10, '10m'));
 $apiFlap->limit($_SERVER['HTTP_REMOTE_ADDR']);
 ```
 
@@ -42,7 +44,7 @@ $flaps->addThrottlingStrategy(new TimeBasedThrottlingStrategy());
 ```
 
 class CustomThrottlingStrategy implements ThrottlingStrategy {
-	public function isViolating($identifier) { ... }
+	public function isViolator($identifier) { ... }
 }
 
 ## Violation handler
@@ -50,7 +52,7 @@ class CustomThrottlingStrategy implements ThrottlingStrategy {
 You can handle violations either using one of the included handlers or by writing your own (implementing the interface `ViolationHandler`).
 
 ```php
-$flaps->setViolationHandler(new HTTPViolationHandler); // limit() writes HTTP 429 and exits (default)
+$flaps->setViolationHandler(new HttpViolationHandler); // limit() writes HTTP 429 and exits (default)
 $flaps->setViolationHandler(new ExceptionViolationHandler); // limit() throws RuntimeException on violation
 $flaps->setViolationHandler(new PassiveViolationHandler); // limit() returns false on violation
 ```
