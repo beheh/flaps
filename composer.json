@@ -19,6 +19,10 @@
 		"doctrine/cache": "~1.4",
 		"predis/predis": "~1.0"
     },
+	"suggest": {
+		"predis/predis": "Enable Redis as storage system",
+        "doctrine/cache": "Enables a wide variety of caching systems as storage"
+    },
     "autoload": {
         "psr-4": {
             "BehEh\\Flaps\\": "src/"

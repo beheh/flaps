@@ -8,15 +8,15 @@ namespace BehEh\Flaps;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-class Flaps {
+class Wing {
 
 	/**
 	 *
-	 * @var AdapterInterface The adapter for this set of flaps.
+	 * @var StorageInterface The storage to be used by all flaps.
 	 */
 	protected $adapter;
 
-	public function __construct(AdapterInterface $adapter) {
+	public function __construct(StorageInterface $adapter) {
 		$this->adapter = $adapter;
 	}
 

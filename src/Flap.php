@@ -12,12 +12,12 @@ class Flap {
 
 	/**
 	 *
-	 * @var AdapterInterface The adapter for this flap.
+	 * @var StorageInterface The adapter for this flap.
 	 */
-	protected $adapter;
+	protected $storage;
 
-	public function __construct(AdapterInterface $adapter) {
-		$this->adapter = $adapter;
+	public function __construct(StorageInterface $storage) {
+		$this->storage = $storage;
 	}
 
 	/**
