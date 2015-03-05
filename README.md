@@ -78,12 +78,16 @@ Alternatively you can use your own storage system by implementing `BehEh\Flaps\S
 
 ## Throttling strategies
 
-### Time based throttling strategy
+### Leaky bucket strategy
+
+This strategy is based on the leaky bucket algorithm. Each unique identifier of a flap corresponds to a leaky bucket.
+Clients can now access the buckets as much as they like, inserting water for every request. If a request would cause the bucket to overflow, it is denied.
+In order to allow later requests, the bucket leaks at a fixed rate.
 
 ```php
-use BehEh\Flaps\Throttling\TimeBasedThrottlingStrategy;
+use BehEh\Flaps\Throttle\LeakyBucketStrategy;
 
-$flap->addThrottlingStrategy(new TimeBasedThrottlingStrategy(2000, '10m'));
+$flap->addThrottle(new LeakyBucketStrategy(2000, '10m'));
 ```
 
 ### Custom throttling strategy
@@ -116,7 +120,7 @@ if(!$flap->limit($user)) {
 
 ### Exception violation handler
 
-```
+```php
 use BehEh\Flaps\Violation\ExceptionViolationHandler;
 
 $flap->setViolationHandler(new ExceptionViolationHandler);

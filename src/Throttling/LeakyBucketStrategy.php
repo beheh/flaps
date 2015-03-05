@@ -11,7 +11,7 @@ use InvalidArgumentException;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-class TimeBasedThrottlingStrategy implements ThrottlingStrategyInterface {
+class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 
 	/**
 	 *
