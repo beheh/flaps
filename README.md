@@ -8,7 +8,8 @@ There are many benefits from rate limiting your web application. At any point in
 - Malicious clients trying to degrade your applications performance
 - Malicious clients bruteforcing user credentials
 - Bugged clients repeating requests over and over again
-- Automated web crawlers indexing as much data as possible without 
+- Automated web crawlers searching for usernames or email adresses
+- Penetration frameworks testing for sql injections and other vulnerabilities
 - Spambots attempting to register a large number of users
 - Spambots attempting to post links to malicious sites
 
