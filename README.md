@@ -1,8 +1,8 @@
 # Flaps
 
-Flaps is a simplistic library for PHP applications to rate limit various requests.
+Flaps is a lightweight library for rate limiting requests in your PHP application.
 
-## Why rate limit?ing
+## Why rate limiting?
 
 There are many benefits from rate limiting your web application. At any point in time your server(s) could be hit by a huge number of requests from one or many clients. These could be:
 - Malicious clients trying to degrade your applications performance
@@ -21,29 +21,25 @@ Most of these problems can be solved in a variety of ways, for example by using 
 
 ## Basic usage
 
-### Setup
-
 ```php
 use Predis\Client;
 use BehEh\Flaps\Storage\PredisStorage;
 use BehEh\Flaps\Wing;
 
+// setup
 $storage = new PredisStorage(new Client());
 $wing = new Wing($storage);
-```
 
-### Rate limiting
-
-```php
+// rate limiting the api
 $flap = $wing->getFlap('api');
 $flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(10, '5s'));
 $flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(200, '5m'));
 $flap->limit($_SERVER['HTTP_REMOTE_ADDR']);
 ```
 
-Each flap is a certain part of your application you would like to protect. It might be all of your api, certain requests which require authentication or only your login page.
+Each flap should be an identifier for a part of your application you would like to protect. It might be all of your api, certain requests which require authentication or only your login page.
 
-Once a user violates any throttling strategy of a flap, a violation handler kicks in. The default is to send the user an "HTTP 429 Too Many Requests" and terminate.
+Once a user violates any throttling strategy of a flap, a violation handler kicks in. The default violation handler sends the HTTP 429 "Too Many Requests" and terminates the script.
 
 ## Storage
 
@@ -60,9 +56,9 @@ $storage = new PredisStorage(new Client('tcp://10.0.0.1:6379'));
 $wing = new Wing($storage);
 ```
 
-### Doctrine
+### Doctrine cache
 
-You can use any of the [Doctrine caching implementations](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html) by using the `DoctrineCacheAdapter`.
+You can use any of the [Doctrine caching implementations](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html) by using the `DoctrineCacheAdapter`:
 
 ```php
 use Doctrine\Common\Cache\ApcCache;
@@ -101,7 +97,7 @@ You can handle violations either using one of the included handlers or by writin
 use BehEh\Flaps\Violation\HttpViolationHandler;
 
 $flap->setViolationHandler(new HttpViolationHandler);
-$flap->limit($user); // sends HTTP 429 and exits on violation (default)
+$flap->limit($user); // sends HTTP 429 "Too Many Requests" and exits on violation (default)
 ```
 
 ## Passive violation handler
