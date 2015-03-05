@@ -6,7 +6,7 @@ The library supports custom storage backends, throttling strategies and violatio
 ## Requirements
 
 - PHP 5.3+
-- A storage container (e.g. Redis, APC or anything supported by [`Doctrine\Cache`](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)
+- A storage container (e.g. Redis, APC or anything supported by _[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)_
 
 ## Basic usage
 
