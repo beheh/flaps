@@ -1,8 +1,8 @@
 {
     "name": "beheh/flaps",
     "type": "library",
-    "description": "Rate-limiting for PHP",
-    "keywords": ["throttle", "rate limit"],
+    "description": "Lightweight library for rate limiting requests",
+    "keywords": ["rate limit", "throttle", "HTTP", "429 Too Many Requests"],
     "license": "ISC",
     "authors": [
         {
