@@ -32,8 +32,8 @@ $wing = new Wing($storage);
 
 // rate limiting the api
 $flap = $wing->getFlap('api');
-$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(10, '5s'));
-$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(200, '5m'));
+$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(10, '1s'));
+$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(2000, '5m'));
 $flap->limit($_SERVER['HTTP_REMOTE_ADDR']);
 ```
 
@@ -77,15 +77,17 @@ Alternatively you can use your own storage system by implementing `BehEh\Flaps\S
 
 ## Throttling strategies
 
+### Time based throttling strategy
+
 ```php
 use BehEh\Flaps\Throttling\TimeBasedThrottlingStrategy;
 
-$flap->addThrottlingStrategy(new TimeBasedThrottlingStrategy());
+$flap->addThrottlingStrategy(new TimeBasedThrottlingStrategy(2000, '10m'));
 ```
 
-class CustomThrottlingStrategy implements ThrottlingStrategy {
-	public function isViolator($identifier) { ... }
-}
+### Custom throttling strategy
+
+Once again you can use your own throttling strategy by implementing `BehEh\Flaps\ThrottlingStrategyInterface`.
 
 ## Violation handler
 
@@ -127,12 +129,7 @@ catch(\RuntimeException $e) {
 
 ### Custom violation handler
 
-```php
-class CustomViolationHandler implements ViolationHandler {
-	// the return value will be passed on to and returned by limit()
-	public function handleViolation($identifier) { ... }
-}
-```
+The corresponding interface for custom violation handlers is `BehEh\Flaps\ViolationHandlerInterface`.
 
 ### Default violation handler
 
