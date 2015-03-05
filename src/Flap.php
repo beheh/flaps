@@ -32,7 +32,7 @@ class Flap {
 	 */
 	protected $violationHandler = null;
 
-	public function addThrottlingStrategy(ThrottlingStrategyInterface $throttlingStrategy) {
+	public function pushThrottlingStrategy(ThrottlingStrategyInterface $throttlingStrategy) {
 		$this->throttlingStrategies[] = $throttlingStrategy;
 	}
 
