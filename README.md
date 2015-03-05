@@ -3,23 +3,10 @@
 Flaps is a fully configurable library for rate limiting requests in your PHP application.
 The library supports custom storage backends, throttling strategies and violation handlers for flexible integration into any project.
 
-## Benefits
-
-There are many benefits from rate limiting your web application. At any point in time your server(s) could be hit by a huge number of requests from one or many clients. These could be:
-- Malicious clients trying to degrade your applications performance
-- Malicious clients bruteforcing user credentials
-- Bugged clients repeating requests over and over again
-- Automated web crawlers searching for usernames or email adresses
-- Penetration frameworks testing for sql injections and other vulnerabilities
-- Spambots attempting to register a large number of users
-- Spambots attempting to post links to malicious sites
-
-Most of these problems can be solved in a variety of ways, for example by using a spam filter or a fully configured firewall. Rate limiting is nevertheless a basic tool for improving application security, but offers no full protection.
-
 ## Requirements
 
 - PHP 5.3+
-- A somewhat persistent storage container (e.g. Redis, APC or anything that is supported by `[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)`
+- A somewhat persistent storage container (e.g. Redis, APC or anything that is supported by [`Doctrine\Cache`](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)`
 
 ## Basic usage
 
@@ -49,6 +36,19 @@ if(!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
 Each flap should be an identifier for a part of your application you would like to protect. It might be all of your api, certain requests which require authentication or only your login page.
 
 Once a user violates any throttling strategy of a flap, the violation handler kicks in. The default violation handler sends the HTTP 429 "Too Many Requests" and terminates the script.
+
+## Benefits
+
+There are many benefits from rate limiting your web application. At any point in time your server(s) could be hit by a huge number of requests from one or many clients. These could be:
+- Malicious clients trying to degrade your applications performance
+- Malicious clients bruteforcing user credentials
+- Bugged clients repeating requests over and over again
+- Automated web crawlers searching for usernames or email adresses
+- Penetration frameworks testing for sql injections and other vulnerabilities
+- Spambots attempting to register a large number of users
+- Spambots attempting to post links to malicious sites
+
+Most of these problems can be solved in a variety of ways, for example by using a spam filter or a fully configured firewall. Rate limiting is nevertheless a basic tool for improving application security, but offers no full protection.
 
 ## Storage
 
