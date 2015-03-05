@@ -1,8 +1,9 @@
 # Flaps
 
-Flaps is a lightweight library for rate limiting requests in your PHP application.
+Flaps is a fully configurable library for rate limiting requests in your PHP application.
+The library supports custom storage backends, throttling strategies and violation handlers for flexible integration into any project.
 
-## Why rate limiting?
+## Benefits
 
 There are many benefits from rate limiting your web application. At any point in time your server(s) could be hit by a huge number of requests from one or many clients. These could be:
 - Malicious clients trying to degrade your applications performance
@@ -18,7 +19,7 @@ Most of these problems can be solved in a variety of ways, for example by using 
 ## Requirements
 
 - PHP 5.3+
-- A somewhat persistent storage container (e.g. Redis, APC or anything that is supported by Doctrine\Cache)
+- A somewhat persistent storage container (e.g. Redis, APC or anything that is supported by `[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)`
 
 ## Basic usage
 
@@ -27,20 +28,27 @@ use Predis\Client;
 use BehEh\Flaps\Storage\PredisStorage;
 use BehEh\Flaps\Wing;
 
-// setup
+// setup storage
 $storage = new PredisStorage(new Client());
 $wing = new Wing($storage);
 
-// rate limiting the api
-$flap = $wing->getFlap('api');
-$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(10, '1s'));
-$flap->pushThrottlingStrategy(new TimeBasedThrottlingStrategy(2000, '5m'));
+// rate limit login attempts by ip
+$flap = $wing->getFlap('login');
+$flap->pushThrottlingStrategy(new LeakyBucketStrategy(3, '5s'));
 $flap->limit($_SERVER['HTTP_REMOTE_ADDR']);
+
+// rate limit access to your api by api key
+$flap = $wing->getFlap('api');
+$flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
+$flap->setViolationHandler(new PassiveViolationHandler);
+if(!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
+	die(json_encode(array('error' => 'too many requests')));
+}
 ```
 
 Each flap should be an identifier for a part of your application you would like to protect. It might be all of your api, certain requests which require authentication or only your login page.
 
-Once a user violates any throttling strategy of a flap, a violation handler kicks in. The default violation handler sends the HTTP 429 "Too Many Requests" and terminates the script.
+Once a user violates any throttling strategy of a flap, the violation handler kicks in. The default violation handler sends the HTTP 429 "Too Many Requests" and terminates the script.
 
 ## Storage
 
