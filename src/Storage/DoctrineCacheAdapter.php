@@ -4,6 +4,5 @@ namespace BehEh\Flaps\Storage;
 
 use BehEh\Flaps\StorageInterface;
 
-class DoctrineAdapter implements StorageInterface {
-	
+class DoctrineCacheAdapter implements StorageInterface {
 }

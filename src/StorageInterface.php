@@ -9,5 +9,8 @@ namespace BehEh\Flaps;
  * @author Benedict Etzel <developer@beheh.de>
  */
 interface StorageInterface {
-	
+
+	public function getItem($key);
+
+	public function save(CacheItemxInterface $item);
 }
