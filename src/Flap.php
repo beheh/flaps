@@ -11,24 +11,31 @@ namespace BehEh\Flaps;
 class Flap {
 
 	/**
-	 *
-	 * @var StorageInterface The adapter for this flap.
+	 * @var StorageInterface
 	 */
 	protected $storage;
 
-	public function __construct(StorageInterface $storage) {
+	/**
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 *
+	 * @param \BehEh\Flaps\StorageInterface $storage
+	 * @param string $name
+	 */
+	public function __construct(StorageInterface $storage, $name) {
 		$this->storage = $storage;
 	}
 
 	/**
-	 *
-	 * @var ThrottlingStrategyInterface[] The throttling strategies for this flap.
+	 * @var ThrottlingStrategyInterface[]
 	 */
 	protected $throttlingStrategies = array();
 
 	/**
-	 *
-	 * @var ViolationHandlerInterface The violation handler for this flap.
+	 * @var ViolationHandlerInterface
 	 */
 	protected $violationHandler = null;
 
@@ -64,11 +71,11 @@ class Flap {
 	}
 
 	public function increment($identifier, $by = 1) {
-		
+		// @todo
 	}
 
 	public function reset($identifier) {
-		
+		// @todo		
 	}
 
 	public function isViolator($identifier) {

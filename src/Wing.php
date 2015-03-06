@@ -31,7 +31,7 @@ class Wing {
 	}
 
 	public function getFlap($name) {
-		$flap = new Flap($this->adapter);
+		$flap = new Flap($this->adapter, $name);
 		if($this->defaultViolationHandler !== null) {
 			$flap->setViolationHandler($this->defaultViolationHandler);
 		}
