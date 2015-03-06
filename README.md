@@ -13,7 +13,7 @@ The library supports custom storage backends, throttling strategies and violatio
 ```php
 use Predis\Client;
 use BehEh\Flaps\Storage\PredisStorage;
-use BehEh\Flaps\Throttling\LeakyBucketStrategy
+use BehEh\Flaps\Throttling\LeakyBucketStrategy;
 use BehEh\Flaps\Flaps;
 
 // setup storage
