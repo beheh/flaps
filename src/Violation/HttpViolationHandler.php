@@ -12,10 +12,16 @@ use BehEh\Flaps\ViolationHandlerInterface;
  */
 class HttpViolationHandler implements ViolationHandlerInterface {
 
+	/**
+     * @codeCoverageIgnore
+     */
 	protected function sendHeader() {
 		header('HTTP/1.1 429 Too Many Requests');
 	}
 
+	/**
+	 * @codeCoverageIgnore
+	 */
 	protected function callExit() {
 		exit(1);
 	}
