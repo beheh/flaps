@@ -1,6 +1,6 @@
 <?php
 
-namespace BehEh\Flaps;
+namespace BehEh\Flaps\Violation;
 
 use PHPUnit_Framework_TestCase;
 use BehEh\Flaps\Violation\PassiveViolationHandler;
