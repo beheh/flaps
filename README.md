@@ -14,14 +14,14 @@ The library supports custom storage backends, throttling strategies and violatio
 use Predis\Client;
 use BehEh\Flaps\Storage\PredisStorage;
 use BehEh\Flaps\Throttling\LeakyBucketStrategy
-use BehEh\Flaps\Wing;
+use BehEh\Flaps\Flaps;
 
 // setup storage
 $storage = new PredisStorage(new Client());
-$wing = new Wing($storage);
+$flaps = new Flaps($storage);
 
 // rate limit login attempts by ip
-$flap = $wing->getFlap('login');
+$flap = $flaps->getFlap('login');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(3, '5s'));
 $flap->limit($_SERVER['HTTP_REMOTE_ADDR']);
 ```
@@ -43,7 +43,7 @@ Most of these problems can be solved in a variety of ways, for example by using 
 
 ```php
 // different violation handler
-$flap = $wing->getFlap('api');
+$flap = $flaps->getFlap('api');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
 $flap->setViolationHandler(new PassiveViolationHandler);
 if(!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
@@ -53,7 +53,7 @@ if(!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
 
 ```php
 // multiple throttling strategies
-$flap = $wing->getFlap('api');
+$flap = $flaps->getFlap('api');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
 $flap->limit($userid);
@@ -68,10 +68,10 @@ The easiest storage system to get started is Redis via Predis:
 ```php
 use Predis\Client;
 use BehEh\Flaps\Storage\PredisStorage;
-use BehEh\Flaps\Wing;
+use BehEh\Flaps\Flaps;
 
 $storage = new PredisStorage(new Client('tcp://10.0.0.1:6379'));
-$wing = new Wing($storage);
+$flaps = new Flaps($storage);
 ```
 
 ### Doctrine cache
@@ -81,12 +81,12 @@ You can use any of the [Doctrine caching implementations](http://doctrine-common
 ```php
 use Doctrine\Common\Cache\ApcCache;
 use BehEh\Flaps\Storage\DoctrineCacheAdapter;
-use BehEh\Flaps\Wing;
+use BehEh\Flaps\Flaps;
 
 $apc = new ApcCache();
 $apc->setNamespace('MyApplication');
 $storage = new DoctrineCacheAdapter($apc);
-$wing = new Wing($storage);
+$flaps = new Flaps($storage);
 ```
 
 ### Custom storage
@@ -155,7 +155,7 @@ The corresponding interface for custom violation handlers is `BehEh\Flaps\Violat
 
 ### Default violation handler
 
-The `Wing` object can pass a default violation handler to the flaps.
+The `Flaps` object can pass a default violation handler to the flaps.
 
 ```php
 $flaps->setDefaultViolationHandler(new CustomViolationHandler);
