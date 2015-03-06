@@ -13,6 +13,6 @@ matrix:
             - 7.0
             - hhvm
 
-script:
-  - phpunit .
+install: composer install
 
+script: phpunit .
