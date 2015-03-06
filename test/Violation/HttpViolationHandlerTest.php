@@ -18,7 +18,7 @@ class HttpViolationHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers HttpViolationHandler::handleViolation
+	 * @covers BehEh\Flaps\Violation\HttpViolationHandler::handleViolation
 	 */
 	public function testhandleViolation() {
 		$this->handler->expects($this->once())->method('sendHeader');

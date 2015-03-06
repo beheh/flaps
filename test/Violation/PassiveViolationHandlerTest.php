@@ -17,7 +17,7 @@ class PassiveViolationHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers PassiveViolationHandler::handleViolation
+	 * @covers BehEh\Flaps\Violation\PassiveViolationHandler::handleViolation
 	 */
 	public function testhandleViolation() {
 		$this->assertFalse($this->handler->handleViolation());
