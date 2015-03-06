@@ -2,12 +2,9 @@
 
 namespace BehEh\Flaps\Violation;
 
-use PHPUnit_Framework_TestCase;
-use BehEh\Flaps\Violation\ExceptionViolationHandler;
+class ExceptionViolationHandlerTest extends \PHPUnit_Framework_TestCase {
 
-class ExceptionViolationHandlerTest extends PHPUnit_Framework_TestCase {
-
-	/*
+	/**
 	 * @var ExceptionViolationHandler
 	 */
 	protected $handler;

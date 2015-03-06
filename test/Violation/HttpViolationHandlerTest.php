@@ -2,13 +2,11 @@
 
 namespace BehEh\Flaps\Violation;
 
-use PHPUnit_Framework_TestCase;
+class HttpViolationHandlerTest extends \PHPUnit_Framework_TestCase {
 
-class HttpViolationHandlerTest extends PHPUnit_Framework_TestCase {
-	/*
+	/**
 	 * @var HttpViolationHandler
 	 */
-
 	protected $handler;
 
 	public function setUp() {
