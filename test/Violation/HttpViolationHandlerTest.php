@@ -8,16 +8,17 @@ class HttpViolationHandlerTest extends PHPUnit_Framework_TestCase {
 	/*
 	 * @var HttpViolationHandler
 	 */
+
 	protected $handler;
 
 	public function setUp() {
 		$this->handler = $this->getMockBuilder('\BehEh\Flaps\Violation\HttpViolationHandler')
-		->setMethods(array('sendHeader', 'callExit'))
-		->getMock();
+				->setMethods(array('sendHeader', 'callExit'))
+				->getMock();
 	}
 
 	/**
-	 * @test
+	 * @covers HttpViolationHandler::handleViolation
 	 */
 	public function testhandleViolation() {
 		$this->handler->expects($this->once())->method('sendHeader');

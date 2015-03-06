@@ -17,7 +17,7 @@ class ExceptionViolationHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @test
+	 * @covers ExceptionViolationHandler::handleViolation
 	 * @expectedException RuntimeException
 	 */
 	public function testhandleViolation() {
