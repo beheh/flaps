@@ -27,6 +27,7 @@ class Flap {
 	 */
 	public function __construct(StorageInterface $storage, $name) {
 		$this->storage = $storage;
+		$this->name = $name;
 	}
 
 	/**
