@@ -57,7 +57,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 		if(!is_numeric($timeScale)) {
 			throw new InvalidArgumentException('timeScale is not numeric');
 		}
-		$this->timeScale = $timeScale;
+		$this->timeScale = (float) $timeScale;
 	}
 
 	/**
