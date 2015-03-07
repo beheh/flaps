@@ -1,12 +1,25 @@
-# Flaps [![Travis](https://img.shields.io/travis/beheh/flaps/master.svg?style=flat-square)](https://travis-ci.org/beheh/flaps) [![Scrutinizer](https://img.shields.io/scrutinizer/coverage/g/beheh/flaps/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/beheh/flaps/?branch=master)
+# Flaps
+
+[![Travis](https://img.shields.io/travis/beheh/flaps/master.svg?style=flat-square)](https://travis-ci.org/beheh/flaps)
+[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/beheh/flaps/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/beheh/flaps/?branch=master)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/beheh/flaps/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/beheh/flaps/?branch=master)
+[![Packagist](https://img.shields.io/packagist/v/beheh/flaps.svg?style=flat-square)](https://packagist.org/packages/beheh/flaps)
+[![Packagist](https://img.shields.io/packagist/l/beheh/flaps.svg?style=flat-square)](https://packagist.org/packages/beheh/flaps)
 
 Flaps is a fully configurable library for rate limiting requests in your PHP application.
+
 The library supports custom storage backends, throttling strategies and violation handlers for flexible integration into any project.
+
+Developed by [@beheh](https://github.com/beheh) and licensed under the ISC license.
+
+## Install
+
 
 ## Requirements
 
-- PHP 5.3+
-- A storage container (e.g. Redis, APC or anything supported by _[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)_
+- PHP 5.3 or newer
+- Persistent(-ish) storage (e.g. Redis, APC or anything supported by _[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)_)
+- Composer
 
 ## Basic usage
 
@@ -122,7 +135,7 @@ Once again, you can supply your own throttling strategy by implementing _BehEh\F
 
 ## Violation handler
 
-You can handle violations either using one of the included handlers or by writing your own (implementing the interface `ViolationHandler`).
+You can handle violations either using one of the included handlers or by writing your own.
 
 ## HTTP violation handler
 
@@ -183,7 +196,3 @@ $loginFlap = $flaps->getFlap('login');
 $loginFlap->addThrottlingStrategy(new TimeBasedThrottlingStrategy(1, '1s'));
 $loginFlap->limit($identifier); // will use CustomViolationHandler
 ```
-
-## Credits
-
-This library was created by Benedict Etzel (developer@beheh.de) and is licensed under the ISC license.
