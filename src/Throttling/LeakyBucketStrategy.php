@@ -4,6 +4,8 @@ namespace BehEh\Flaps\Throttling;
 
 use BehEh\Flaps\ThrottlingStrategyInterface;
 use InvalidArgumentException;
+use BehEh\Flaps\StorageInterface;
+use LogicException;
 
 /**
  *
@@ -46,7 +48,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	 */
 	public function setTimeScale($timeScale) {
 		if(is_string($timeScale)) {
-			$timeScale = self::parseTime($time);
+			$timeScale = self::parseTime($timeScale);
 		}
 		if(!is_numeric($timeScale)) {
 			throw new InvalidArgumentException('timeScale is not numeric');
@@ -65,8 +67,17 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct($requests, $timeScale) {
-		$this->setRequests($requests);
+		$this->setRequestsPerTimeScale($requests);
 		$this->setTimeScale($timeScale);
+	}
+
+	/**
+	 * @var StorageInterface
+	 */
+	protected $storage;
+
+	public function setStorage(StorageInterface $storage) {
+		$this->storage = $storage;
 	}
 
 	/**
@@ -92,7 +103,35 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	 * @return boolean
 	 */
 	public function isViolator($identifier) {
-		// @todo implement time based throttling strategy
+		if($this->storage === null) {
+			throw new LogicException('no storage set');
+		}
+
+		$time = microtime(true);
+		$timestamp = $time;
+		$rate = $this->requestsPerTimeScale / $this->timeScale;
+
+		$requestCount = $this->storage->getValue($identifier);
+		if($requestCount > 0) {
+			$secondsSince = $time - $this->storage->getTimestamp($identifier);
+			$reduceBy = floor($secondsSince * $rate);
+			$unfinishedSeconds = $secondsSince % $rate;
+			$requestCount -= $reduceBy;
+			$timestamp = $time - ($rate - $unfinishedSeconds);
+		}
+
+		if($requestCount + 1 > $this->requestsPerTimeScale) {
+			return true;
+		}
+
+		$requestCount++;
+
+		$this->storage->setValue($identifier, $requestCount);
+		$this->storage->setTimestamp($identifier, $timestamp);
+
+		$duration = $requestCount / $rate;
+		$this->storage->expire($identifier, $duration);
+
 		return false;
 	}
 
