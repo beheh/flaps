@@ -10,7 +10,13 @@ namespace BehEh\Flaps;
  */
 interface StorageInterface {
 
-	public function getItem($key);
+	public function setValue($key, $value);
 
-	public function save(CacheItemxInterface $item);
+	public function getValue($key);
+
+	public function setTimestamp($key, $timestamp);
+
+	public function getTimestamp($key);
+
+	public function expire($key, $timestamp);
 }
