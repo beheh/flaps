@@ -10,5 +10,5 @@ namespace BehEh\Flaps;
  */
 interface ViolationHandlerInterface {
 
-	public function handleViolation($identifier);
+	public function handleViolation();
 }

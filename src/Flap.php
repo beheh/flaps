@@ -22,7 +22,7 @@ class Flap {
 
 	/**
 	 *
-	 * @param \BehEh\Flaps\StorageInterface $storage
+	 * @param StorageInterface $storage
 	 * @param string $name
 	 */
 	public function __construct(StorageInterface $storage, $name) {
@@ -49,6 +49,14 @@ class Flap {
 	}
 
 	/**
+	 *
+	 * @return ViolationHandlerInterface
+	 */
+	public function getViolationHandler() {
+		return $this->violationHandler;
+	}
+
+	/**
 	 * Ensures a violation handler is set. If none is set, default to an HttpViolationHandler.
 	 */
 	protected function ensureViolationHandler() {
@@ -59,7 +67,7 @@ class Flap {
 
 	/**
 	 * the user $identifier
-	 * @param any $identifier
+	 * @param string $identifier
 	 * @return boolean
 	 */
 	public function limit($identifier) {
@@ -79,6 +87,11 @@ class Flap {
 		// @todo		
 	}
 
+	/**
+	 *
+	 * @param string $identifier
+	 * @return boolean
+	 */
 	public function isViolator($identifier) {
 		foreach($this->throttlingStrategies as $throttlingStrategy) {
 			/** @var ThrottlingStrategyInterface $throttlingHandler */
