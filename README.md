@@ -1,4 +1,4 @@
-# Flaps [![Travis](https://img.shields.io/travis/beheh/flaps/master.svg?style=flat-square)](https://travis-ci.org/beheh/flaps) [![Coveralls](https://img.shields.io/coveralls/beheh/flaps/master.svg?style=flat-square)](https://coveralls.io/r/beheh/flaps?branch=master)
+# Flaps [![Travis](https://img.shields.io/travis/beheh/flaps/master.svg?style=flat-square)](https://travis-ci.org/beheh/flaps) [![Scrutinizer](https://img.shields.io/scrutinizer/coverage/g/beheh/flaps/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/beheh/flaps/?branch=master)
 
 Flaps is a fully configurable library for rate limiting requests in your PHP application.
 The library supports custom storage backends, throttling strategies and violation handlers for flexible integration into any project.
