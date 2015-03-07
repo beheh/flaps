@@ -18,7 +18,7 @@ Developed by [@beheh](https://github.com/beheh) and licensed under the ISC licen
 ## Requirements
 
 - PHP 5.3 or newer
-- Persistent(-ish) storage (e.g. Redis, APC or anything supported by _[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)_)
+- Persistent-ish storage (e.g. Redis, APC or anything supported by _[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)_)
 - Composer
 
 ## Basic usage
@@ -38,7 +38,7 @@ $flap = $flaps->getFlap('login');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(3, '5s'));
 
  // send "HTTP/1.1 429 Too Many Requests" and die() on violation (default)
-$flap->limit($_SERVER['HTTP_REMOTE_ADDR']);
+$flap->limit($_SERVER['REMOTE_ADDR']);
 ```
 
 ## Why rate limit?
