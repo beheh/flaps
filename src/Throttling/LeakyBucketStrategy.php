@@ -16,7 +16,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	/**
 	 * @var int
 	 */
-	protected $reqeusts;
+	protected $requests;
 
 	/**
 	 * @var int
@@ -33,7 +33,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 		if(!is_numeric($requests)) {
 			throw new InvalidArgumentException('requests is not numeric');
 		}
-		$this->reqeusts = floor($requests);
+		$this->requests = floor($requests);
 		if(is_string($timeScale)) {
 			$timeScale = self::parseTime($time);
 		}
