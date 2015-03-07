@@ -16,44 +16,74 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	/**
 	 * @var int
 	 */
-	protected $requests;
+	protected $requestsPerTimeScale;
 
 	/**
-	 * @var int
+	 *
+	 * @param int $requests
+	 * @throws InvalidArgumentException
+	 */
+	public function setRequestsPerTimeScale($requests) {
+		if(!is_numeric($requests)) {
+			throw new InvalidArgumentException('requests is not numeric');
+		}
+		$this->requestsPerTimeScale = floor($requests);
+	}
+
+	public function getRequestsPerTimeScale() {
+		return $this->requestsPerTimeScale;
+	}
+
+	/**
+	 * @var float
 	 */
 	protected $timeScale;
 
 	/**
 	 *
-	 * @param int $requests The requests allowed per timeSpan
-	 * @param int|string Either the amount of seconds or a string such as "10s", "5m" or "1h"
+	 * @param float|string $timeScale
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($requests, $timeScale) {
-		if(!is_numeric($requests)) {
-			throw new InvalidArgumentException('requests is not numeric');
-		}
-		$this->requests = floor($requests);
+	public function setTimeScale($timeScale) {
 		if(is_string($timeScale)) {
 			$timeScale = self::parseTime($time);
 		}
 		if(!is_numeric($timeScale)) {
 			throw new InvalidArgumentException('timeScale is not numeric');
 		}
-		$this->timeScale = floor($timeScale);
+		$this->timeScale = $timeScale;
+	}
+
+	public function getTimeScale() {
+		return $this->timeScale;
 	}
 
 	/**
+	 *
+	 * @param int $requests The requests allowed per timeSpan
+	 * @param int|string $timeScale Either the amount of seconds or a string such as "10s", "5m" or "1h"
+	 * @throws InvalidArgumentException
+	 */
+	public function __construct($requests, $timeScale) {
+		$this->setRequests($requests);
+		$this->setTimeScale($timeScale);
+	}
+
+	/**
+	 * Parses a time scale string such as "10s", "5m" or "1h" and returns the amount of seconds
 	 * @param string $timeScale
-	 * @return int
+	 * @return float|null
 	 */
 	public static function parseTime($timeScale) {
 		$times = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 86400, 'w' => 604800);
 		$matches = array();
-		if(preg_match('/^((\d+)?(\.\d+)?)('.implode('|', array_keys($times)).')$/', $timeScale, $matches)) {
-			$timeScale = floatval($matches[1]) * $times[$matches[4]];
+		if(is_numeric($timeScale)) {
+			return $timeScale;
 		}
-		return $timeScale;
+		if(preg_match('/^((\d+)?(\.\d+)?)('.implode('|', array_keys($times)).')$/', $timeScale, $matches)) {
+			return floatval($matches[1]) * $times[$matches[4]];
+		}
+		return null;
 	}
 
 	/**
