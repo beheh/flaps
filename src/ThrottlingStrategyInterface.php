@@ -2,6 +2,8 @@
 
 namespace BehEh\Flaps;
 
+use BehEh\Flaps\StorageInterface;
+
 /**
  *
  *
@@ -11,4 +13,6 @@ namespace BehEh\Flaps;
 interface ThrottlingStrategyInterface {
 
 	public function isViolator($identifier);
+
+	public function setStorage(StorageInterface $storage);
 }
