@@ -29,9 +29,13 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 		if(!is_numeric($requests)) {
 			throw new InvalidArgumentException('requests is not numeric');
 		}
-		$this->requestsPerTimeScale = floor($requests);
+		$this->requestsPerTimeScale = (int) floor($requests);
 	}
 
+	/**
+	 *
+	 * @return int
+	 */
 	public function getRequestsPerTimeScale() {
 		return $this->requestsPerTimeScale;
 	}
@@ -56,8 +60,12 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 		$this->timeScale = $timeScale;
 	}
 
+	/**
+	 *
+	 * @return float
+	 */
 	public function getTimeScale() {
-		return $this->timeScale;
+		return (float) $this->timeScale;
 	}
 
 	/**
@@ -81,7 +89,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	}
 
 	/**
-	 * Parses a time scale string such as "10s", "5m" or "1h" and returns the amount of seconds
+	 * Parses a time scale string such as "10s", "5m" or "1h" and returns the amount of seconds.
 	 * @param string $timeScale
 	 * @return float|null
 	 */
@@ -98,7 +106,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	}
 
 	/**
-	 * Returns whether the identifier exceeds it's allowed capacity
+	 * Returns whether the identifier exceeds it's allowed capacity.
 	 * @param string $identifier
 	 * @return boolean
 	 */
