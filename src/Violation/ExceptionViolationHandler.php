@@ -3,7 +3,6 @@
 namespace BehEh\Flaps\Violation;
 
 use BehEh\Flaps\ViolationHandlerInterface;
-use RuntimeException;
 
 /**
  *
@@ -14,7 +13,7 @@ use RuntimeException;
 class ExceptionViolationHandler implements ViolationHandlerInterface {
 
 	public function handleViolation() {
-		throw new RuntimeException();
+		throw new ThrottlingViolationException();
 	}
 
 }
