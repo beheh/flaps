@@ -23,6 +23,8 @@ $flaps = new Flaps($storage);
 // rate limit login attempts by ip
 $flap = $flaps->getFlap('login');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(3, '5s'));
+
+ // send "HTTP/1.1 429 Too Many Requests" and die() on violation (default)
 $flap->limit($_SERVER['HTTP_REMOTE_ADDR']);
 ```
 
@@ -41,8 +43,12 @@ Most of these problems can be solved in a variety of ways, for example by using 
 
 ## Advanced examples
 
+### Application-handled violation
+
 ```php
-// different violation handler
+use BehEh\Flaps\Throttling\LeakyBucketStrategy;
+use BehEh\Flaps\Violation\PassiveViolationHandler;
+
 $flap = $flaps->getFlap('api');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
 $flap->setViolationHandler(new PassiveViolationHandler);
@@ -51,11 +57,14 @@ if(!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
 }
 ```
 
+### Multiple throttling strategies
+
 ```php
-// multiple throttling strategies
+use BehEh\Flaps\Throttling\LeakyBucketStrategy;
+
 $flap = $flaps->getFlap('api');
-$flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
-$flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
+$flap->pushThrottlingStrategy(new LeakyBucketStrategy(3, '1s'));
+$flap->pushThrottlingStrategy(new LeakyBucketStrategy(10, '10s'));
 $flap->limit($userid);
 ```
 
@@ -91,7 +100,7 @@ $flaps = new Flaps($storage);
 
 ### Custom storage
 
-Alternatively you can use your own storage system by implementing `BehEh\Flaps\StorageInterface`.
+Alternatively you can use your own storage system by implementing _BehEh\Flaps\StorageInterface_.
 
 ## Throttling strategies
 
@@ -104,12 +113,12 @@ In order to allow later requests, the bucket leaks at a fixed rate.
 ```php
 use BehEh\Flaps\Throttle\LeakyBucketStrategy;
 
-$flap->addThrottle(new LeakyBucketStrategy(2000, '10m'));
+$flap->addThrottle(new LeakyBucketStrategy(60, '10m'));
 ```
 
 ### Custom throttling strategy
 
-Once again you can use your own throttling strategy by implementing `BehEh\Flaps\ThrottlingStrategyInterface`.
+Once again, you can supply your own throttling strategy by implementing _BehEh\Flaps\ThrottlingStrategyInterface_.
 
 ## Violation handler
 
@@ -117,41 +126,51 @@ You can handle violations either using one of the included handlers or by writin
 
 ## HTTP violation handler
 
+The HTTP violation handler is the most basic violation handler, recommended for simple scripts.
+It simply sends the correct HTTP header (status code 429) and die()s. This is not recommended for any larger application and should be replaced by one of the more customizable handlers.
+
 ```php
 use BehEh\Flaps\Violation\HttpViolationHandler;
 
 $flap->setViolationHandler(new HttpViolationHandler);
-$flap->limit($user); // sends HTTP 429 "Too Many Requests" and exits on violation (default)
+$flap->limit($identifier);  // send "HTTP/1.1 429 Too Many Requests" and die() on violation
 ```
 
 ## Passive violation handler
+
+The passive violation handler allows you to easily react to violations.
+`limit()` will return false if the requests violates any throttling strategy, so you are able to log the request or return a custom error page.
 
 ```php
 use BehEh\Flaps\Violation\PassiveViolationHandler;
 
 $flap->setViolationHandler(new PassiveViolationHandler);
-if(!$flap->limit($user)) {
+if(!$flap->limit($identifier)) {
 	// violation
 }
 ```
 
 ### Exception violation handler
 
+The exception violation handler can be used in larger frameworks. It will throw a _ThrottlingViolationException_ whenever a _ThrottlingStrategy_ is violated.
+You should be able to setup your exception handler to catch any _ThrottlingViolationException_.
+
 ```php
 use BehEh\Flaps\Violation\ExceptionViolationHandler;
+use BehEh\Flaps\Violation\ThrottlingViolationException;
 
 $flap->setViolationHandler(new ExceptionViolationHandler);
 try {
-	$flap->limit($user); // throws RuntimeException on violation
+	$flap->limit($identifier); // throws ThrottlingViolationException on violation
 }
-catch(\RuntimeException $e) {
+catch(ThrottlingViolationException $e) {
 	// violation
 }
 ```
 
 ### Custom violation handler
 
-The corresponding interface for custom violation handlers is `BehEh\Flaps\ViolationHandlerInterface`.
+The corresponding interface for custom violation handlers is _BehEh\Flaps\ViolationHandlerInterface_.
 
 ### Default violation handler
 
