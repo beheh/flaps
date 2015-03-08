@@ -12,9 +12,6 @@ The library supports custom storage backends, throttling strategies and violatio
 
 Developed by [@beheh](https://github.com/beheh) and licensed under the ISC license.
 
-## Install
-
-
 ## Requirements
 
 - PHP 5.3 or newer
