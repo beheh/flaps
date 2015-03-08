@@ -17,19 +17,19 @@ class PredisStorage implements StorageInterface {
 	}
 
 	public function setValue($key, $value) {
-		$this->client->set($key, $value);
+		$this->client->set($key, intval($value));
 	}
 
 	public function getValue($key) {
-		return $this->client->get($key);
+		return intval($this->client->get($key));
 	}
 
 	public function setTimestamp($key, $timestamp) {
-		$this->client->set($key.':time', $timestamp);
+		$this->client->set($key.':time', floatval($timestamp));
 	}
 
 	public function getTimestamp($key) {
-		return $this->client->get($key.':time');
+		return floatval($his->client->get($key.':time'));
 	}
 
 	public function expireIn($key, $seconds) {
