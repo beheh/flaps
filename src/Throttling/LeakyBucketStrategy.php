@@ -27,9 +27,13 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	 */
 	public function setRequestsPerTimeScale($requests) {
 		if(!is_numeric($requests)) {
-			throw new InvalidArgumentException('requests is not numeric');
+			throw new InvalidArgumentException('requests per timescale is not numeric');
 		}
-		$this->requestsPerTimeScale = (int) floor($requests);
+		$requests = (int) $requests;
+		if($requests < 1) {
+			throw new InvalidArgumentException('requests per timescale cannot be smaller than 1');
+		}
+		$this->requestsPerTimeScale = $requests;
 	}
 
 	/**
@@ -55,9 +59,13 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 			$timeScale = self::parseTime($timeScale);
 		}
 		if(!is_numeric($timeScale)) {
-			throw new InvalidArgumentException('timeScale is not numeric');
+			throw new InvalidArgumentException('time scale is not numeric');
 		}
-		$this->timeScale = (float) $timeScale;
+		$timeScale = (float) $timeScale;
+		if($timeScale <= 0) {
+			throw new InvalidArgumentException('time scale cannot be 0 or less');
+		}
+		$this->timeScale = $timeScale;
 	}
 
 	/**
