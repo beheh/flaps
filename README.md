@@ -96,6 +96,8 @@ $storage = new PredisStorage(new Client('tcp://10.0.0.1:6379'));
 $flaps = new Flaps($storage);
 ```
 
+Don't forget to `composer require predis/predis`.
+
 ### Doctrine cache
 
 You can use any of the [Doctrine caching implementations](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html) by using the `DoctrineCacheAdapter`:
@@ -110,6 +112,8 @@ $apc->setNamespace('MyApplication');
 $storage = new DoctrineCacheAdapter($apc);
 $flaps = new Flaps($storage);
 ```
+
+The Doctrine caching implementations can be installed with `composer require doctrine/cache`.
 
 ### Custom storage
 
