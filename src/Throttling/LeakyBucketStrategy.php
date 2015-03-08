@@ -131,8 +131,10 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 			$secondsSince = $time - $this->storage->getTimestamp($identifier);
 			$reduceBy = floor($secondsSince * $rate);
 			$unfinishedSeconds = fmod($secondsSince, $rate);
-			$requestCount -= $reduceBy;
-			$timestamp = $time - ($rate - $unfinishedSeconds);
+			$requestCount = max($requestCount - $reduceBy, 0);
+			if($requestCount > 0) {
+				$timestamp = $time - ($rate - $unfinishedSeconds);
+			}
 		}
 
 		if($requestCount + 1 > $this->requestsPerTimeScale) {
