@@ -33,7 +33,7 @@ class PredisStorage implements StorageInterface {
 	}
 
 	private function prefixTimestamp($timestamp) {
-		return $this->prefixKey('timestamp:'.$timestamp);
+		return $this->prefixKey($timestamp.':timestamp');
 	}
 
 	public function setValue($key, $value) {
