@@ -28,14 +28,19 @@ class DoctrineCacheAdapter implements StorageInterface {
 	}
 
 	public function setTimestamp($key, $timestamp) {
-		$this->cache->save($key.':time', floatval($timestamp));
+		$this->cache->save($key.':timestamp', floatval($timestamp));
 	}
 
 	public function getTimestamp($key) {
-		if(!$this->cache->contains($key.':time')) {
-			return 0;
+		if(!$this->cache->contains($key.':timestamp')) {
+			return (float) 0;
 		}
-		return intval($this->cache->fetch($key.':time'));
+		return intval($this->cache->fetch($key.':timestamp'));
+	}
+
+	public function expire($key) {
+		$this->cache->delete($key.':timestamp');
+		return $this->cache->delete($key);
 	}
 
 	public function expireIn($key, $seconds) {
