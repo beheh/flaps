@@ -117,13 +117,17 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 
 		$time = microtime(true);
 		$timestamp = $time;
-		$rate = $this->requestsPerTimeScale / $this->timeScale;
+
+		$rate = (float) $this->requestsPerTimeScale / $this->timeScale;
+		if($rate === 0) {
+			throw new LogicException('leak rate is 0 ('.$this->requestsPerTimeScale.'/'.$this->timeScale.')');
+		}
 
 		$requestCount = $this->storage->getValue($identifier);
 		if($requestCount > 0) {
 			$secondsSince = $time - $this->storage->getTimestamp($identifier);
 			$reduceBy = floor($secondsSince * $rate);
-			$unfinishedSeconds = $secondsSince % $rate;
+			$unfinishedSeconds = fmod($secondsSince, $rate);
 			$requestCount -= $reduceBy;
 			$timestamp = $time - ($rate - $unfinishedSeconds);
 		}
@@ -137,8 +141,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 		$this->storage->setValue($identifier, $requestCount);
 		$this->storage->setTimestamp($identifier, $timestamp);
 
-		$duration = $requestCount / $rate;
-		$this->storage->expire($identifier, $duration);
+		$this->storage->expireIn($identifier, $requestCount / $rate);
 
 		return false;
 	}
