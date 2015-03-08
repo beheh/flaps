@@ -17,13 +17,14 @@ class HttpViolationHandler implements ViolationHandlerInterface {
 	 */
 	protected function sendHeader() {
 		header('HTTP/1.1 429 Too Many Requests');
+		header('Content-Type: text/plain');
 	}
 
 	/**
 	 * @codeCoverageIgnore
 	 */
 	protected function callExit() {
-		exit(1);
+		die('Too many requests');
 	}
 
 	public function handleViolation() {
