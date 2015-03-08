@@ -34,7 +34,7 @@ class PredisStorage implements StorageInterface {
 
 	public function expireIn($key, $seconds) {
 		$redisTime = $this->client->time();
-		$this->client->expireat($key, ceil($redisTime[0] + $seconds));
+		return $this->client->expireat($key, ceil($redisTime[0] + $seconds)) === 1;
 	}
 
 }
