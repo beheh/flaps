@@ -3,12 +3,14 @@
     "type": "library",
     "description": "Lightweight library for rate limiting requests",
     "keywords": ["rate limit", "throttle", "HTTP", "429 Too Many Requests"],
+	"homepage": "https://github.com/beheh/flaps",
     "license": "ISC",
     "authors": [
         {
             "name": "Benedict Etzel",
             "email": "developer@beheh.de",
-            "homepage": "https://beheh.de"
+            "homepage": "https://beheh.de",
+			"role": "Developer"
         }
     ],
     "require": {
