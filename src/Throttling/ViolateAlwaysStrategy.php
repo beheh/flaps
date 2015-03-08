@@ -13,6 +13,10 @@ use BehEh\Flaps\StorageInterface;
  */
 class ViolateAlwaysStrategy implements ThrottlingStrategyInterface {
 
+	/**
+	 * @codeCoverageIgnore
+	 * @param StorageInterface $storage
+	 */
 	public function setStorage(StorageInterface $storage) {
 		return;
 	}
