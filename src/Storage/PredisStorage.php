@@ -29,11 +29,11 @@ class PredisStorage implements StorageInterface {
 	}
 
 	public function getTimestamp($key) {
-		$this->client->get($key.':time');
+		return $this->client->get($key.':time');
 	}
 
 	public function expire($key, $timestamp) {
-		return $this->client->expireat($key, $timestamp) === 1;
+		$this->client->expireat($key, $timestamp);
 	}
 
 }
