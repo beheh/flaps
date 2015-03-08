@@ -29,8 +29,8 @@ class MockStorage implements StorageInterface {
 		return isset($this->timestamps[$key]) ? $this->timestamps[$key] : 0;
 	}
 
-	public function expire($key, $timestamp) {
-		$this->expires[$key] = $timestamp;
+	public function expireIn($key, $seconds) {
+		$this->expires[$key] = $seconds;
 	}
 
 }
