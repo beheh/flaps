@@ -25,6 +25,8 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(2.1, $this->strategy->getTimeScale());
 		$this->strategy->setTimeScale(2.9);
 		$this->assertEquals(2.9, $this->strategy->getTimeScale());
+		$this->strategy->setTimeScale('1m');
+		$this->assertEquals(60, $this->strategy->getTimeScale());
 	}
 
 	/**
