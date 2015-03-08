@@ -18,5 +18,7 @@ interface StorageInterface {
 
 	public function getTimestamp($key);
 
+	public function expire($key);
+
 	public function expireIn($key, $seconds);
 }

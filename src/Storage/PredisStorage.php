@@ -12,12 +12,24 @@ class PredisStorage implements StorageInterface {
 	 */
 	protected $client;
 
-	public function __construct(Client $client) {
+	public function __construct(Client $client, array $options = array()) {
 		$this->client = $client;
+		$this->configure($options);
+	}
+
+	/**
+	 * @var array
+	 */
+	protected $options;
+
+	public function configure(array $options) {
+		$this->options = array_merge(array(
+			'prefix' => 'flaps:'
+		), $options);
 	}
 
 	private function prefixKey($key) {
-		return 'flaps:'.$key;
+		return $this->options['prefix'].$key;
 	}
 
 	private function prefixTimestamp($timestamp) {
@@ -38,6 +50,11 @@ class PredisStorage implements StorageInterface {
 
 	public function getTimestamp($key) {
 		return floatval($this->client->get($this->prefixTimestamp($key)));
+	}
+
+	public function expire($key) {
+		$this->client->del($this->prefixTimestamp($key));
+		return $this->client->del($this->prefixKey($key)) === 1;
 	}
 
 	public function expireIn($key, $seconds) {
