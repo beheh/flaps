@@ -2,7 +2,7 @@
     "name": "beheh/flaps",
     "type": "library",
     "description": "Fully configurable library for rate limiting requests in your application",
-    "keywords": ["rate limit", "throttle", "HTTP", "429 Too Many Requests"],
+    "keywords": ["rate limit", "throttle", "http"],
 	"homepage": "https://github.com/beheh/flaps",
     "license": "ISC",
     "authors": [
