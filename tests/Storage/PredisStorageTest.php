@@ -73,10 +73,12 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->client->exists('key'));
 		$this->assertTrue($this->client->exists('key:timestamp'));
 
-		$this->storage->expire('key');
+		$this->assertTrue($this->storage->expire('key'));
 
 		$this->assertFalse($this->client->exists('key'));
 		$this->assertFalse($this->client->exists('key:timestamp'));
+
+		$this->assertFalse($this->storage->expire('key'));
 	}
 
 	/**
@@ -92,10 +94,12 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->client->exists('key'));
 		$this->assertTrue($this->client->exists('key:timestamp'));
 
-		$this->storage->expireIn('key', 0);
+		$this->assertTrue($this->storage->expireIn('key', 0));
 
 		$this->assertFalse($this->client->exists('key'));
 		$this->assertFalse($this->client->exists('key:timestamp'));
+
+		$this->assertFalse($this->storage->expireIn('key', 0));
 	}
 
 	protected function tearDown() {

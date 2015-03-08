@@ -54,14 +54,14 @@ class PredisStorage implements StorageInterface {
 
 	public function expire($key) {
 		$this->client->del($this->prefixTimestamp($key));
-		return $this->client->del($this->prefixKey($key)) === 1;
+		return (int) $this->client->del($this->prefixKey($key)) === 1;
 	}
 
 	public function expireIn($key, $seconds) {
 		$redisTime = $this->client->time();
 		$at = ceil($redisTime[0] + $seconds);
 		$this->client->expireat($this->prefixTimestamp($key), $at);
-		return $this->client->expireat($this->prefixKey($key), $at) === 1;
+		return (int) $this->client->expireat($this->prefixKey($key), $at) === 1;
 	}
 
 }
