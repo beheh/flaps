@@ -109,6 +109,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 	 * Returns whether the identifier exceeds it's allowed capacity.
 	 * @param string $identifier
 	 * @return boolean
+	 * @throws LogicException
 	 */
 	public function isViolator($identifier) {
 		if($this->storage === null) {
@@ -122,6 +123,8 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 		if($rate === 0) {
 			throw new LogicException('leak rate is 0 ('.$this->requestsPerTimeScale.'/'.$this->timeScale.')');
 		}
+
+		$identifier = 'leaky:'.md5($rate).':'.$identifier;
 
 		$requestCount = $this->storage->getValue($identifier);
 		if($requestCount > 0) {

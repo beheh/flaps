@@ -38,9 +38,7 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase {
 		$instance = new LeakyBucketStrategy(1, '1s');
 		$storage = new \BehEh\Flaps\MockStorage();
 		$instance->setStorage($storage);
-		$this->assertEquals(0, $storage->getValue('BehEh'));
 		$this->assertFalse($instance->isViolator('BehEh'));
-		$this->assertEquals(1, $storage->getValue('BehEh'));
 		$this->assertTrue($instance->isViolator('BehEh'));
 		usleep(500 * 1000);
 		$this->assertTrue($instance->isViolator('BehEh'));

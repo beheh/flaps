@@ -72,35 +72,26 @@ class Flap {
 	 * @return boolean
 	 */
 	public function limit($identifier) {
-		$this->increment($identifier);
 		if($this->isViolator($identifier)) {
 			$this->ensureViolationHandler();
-			return $this->violationHandler->handleViolation($identifier);
+			return $this->violationHandler->handleViolation();
 		}
 		return true;
 	}
-
-	public function increment($identifier, $by = 1) {
-		// @todo
-	}
-
-	public function reset($identifier) {
-		// @todo		
-	}
-
 	/**
 	 *
 	 * @param string $identifier
 	 * @return boolean
 	 */
 	public function isViolator($identifier) {
+		$violation = false;
 		foreach($this->throttlingStrategies as $throttlingStrategy) {
 			/** @var ThrottlingStrategyInterface $throttlingHandler */
-			if($throttlingStrategy->isViolator($identifier)) {
-				return true;
+			if($throttlingStrategy->isViolator($this->name.':'.$identifier)) {
+				$violation = true;
 			}
 		}
-		return false;
+		return $violation;
 	}
 
 }
