@@ -128,10 +128,6 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface {
 		$timestamp = $time;
 
 		$rate = (float) $this->requestsPerTimeScale / $this->timeScale;
-		if($rate <= 0) {
-			throw new LogicException('leak rate is zero or smaller ('.$this->requestsPerTimeScale.'/'.$this->timeScale.')');
-		}
-
 		$identifier = 'leaky:'.sha1($rate.$identifier);
 
 		$requestCount = $this->storage->getValue($identifier);

@@ -127,6 +127,7 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testIsViolatorWithZeroRate() {
 		$instance = new LeakyBucketStrategy(0, 0);
+		$instance->setStorage(new \BehEh\Flaps\MockStorage());
 		$instance->isViolator('BehEh');
 	}
 
