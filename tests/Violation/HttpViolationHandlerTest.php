@@ -18,7 +18,7 @@ class HttpViolationHandlerTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @covers BehEh\Flaps\Violation\HttpViolationHandler::handleViolation
 	 */
-	public function testhandleViolation() {
+	public function testHandleViolation() {
 		$this->handler->expects($this->once())->method('sendHeader');
 		$this->handler->expects($this->once())->method('callExit');
 		$this->handler->handleViolation();

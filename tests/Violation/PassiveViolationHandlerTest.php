@@ -16,7 +16,7 @@ class PassiveViolationHandlerTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @covers BehEh\Flaps\Violation\PassiveViolationHandler::handleViolation
 	 */
-	public function testhandleViolation() {
+	public function testHandleViolation() {
 		$this->assertFalse($this->handler->handleViolation());
 	}
 

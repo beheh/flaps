@@ -17,7 +17,7 @@ class ExceptionViolationHandlerTest extends \PHPUnit_Framework_TestCase {
 	 * @covers BehEh\Flaps\Violation\ExceptionViolationHandler::handleViolation
 	 * @expectedException BehEh\Flaps\Violation\ThrottlingViolationException
 	 */
-	public function testhandleViolation() {
+	public function testHandleViolation() {
 		$this->handler->handleViolation();
 	}
 
