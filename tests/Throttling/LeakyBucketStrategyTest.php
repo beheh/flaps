@@ -2,6 +2,8 @@
 
 namespace BehEh\Flaps\Throttling;
 
+use BehEh\Flaps\Mock\Storage as MockStorage;
+
 class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase {
 
 	protected $strategy;
@@ -127,7 +129,7 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testIsViolatorWithZeroRate() {
 		$instance = new LeakyBucketStrategy(0, 0);
-		$instance->setStorage(new \BehEh\Flaps\MockStorage());
+		$instance->setStorage(new MockStorage);
 		$instance->isViolator('BehEh');
 	}
 
@@ -136,8 +138,7 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testIsViolator() {
 		$instance = new LeakyBucketStrategy(1, '1s');
-		$storage = new \BehEh\Flaps\MockStorage();
-		$instance->setStorage($storage);
+		$instance->setStorage(new MockStorage);
 		$this->assertFalse($instance->isViolator('BehEh'));
 		$this->assertTrue($instance->isViolator('BehEh'));
 		usleep(500 * 1000);

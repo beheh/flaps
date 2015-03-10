@@ -1,8 +1,10 @@
 <?php
 
-namespace BehEh\Flaps;
+namespace BehEh\Flaps\Mock;
 
-class MockStorage implements StorageInterface {
+use BehEh\Flaps\StorageInterface;
+
+class Storage implements StorageInterface {
 
 	protected $values;
 	protected $timestamps;
