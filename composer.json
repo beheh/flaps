@@ -26,8 +26,6 @@
         "doctrine/cache": "Enables a wide variety of caching systems as storage"
     },
     "autoload": {
-        "psr-4": {
-            "BehEh\\Flaps\\": "src/"
-        }
+        "psr-4": {"BehEh\\Flaps\\": "src/Flaps"}
     }	
 }
