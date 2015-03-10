@@ -10,10 +10,12 @@ use BehEh\Flaps\ViolationHandlerInterface;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-class ExceptionViolationHandler implements ViolationHandlerInterface {
+class ExceptionViolationHandler implements ViolationHandlerInterface
+{
 
-	public function handleViolation() {
-		throw new ThrottlingViolationException();
-	}
+    public function handleViolation()
+    {
+        throw new ThrottlingViolationException();
+    }
 
 }

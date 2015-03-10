@@ -2,23 +2,26 @@
 
 namespace BehEh\Flaps\Violation;
 
-class ExceptionViolationHandlerTest extends \PHPUnit_Framework_TestCase {
+class ExceptionViolationHandlerTest extends \PHPUnit_Framework_TestCase
+{
 
-	/**
-	 * @var ExceptionViolationHandler
-	 */
-	protected $handler;
+    /**
+     * @var ExceptionViolationHandler
+     */
+    protected $handler;
 
-	public function setUp() {
-		$this->handler = new ExceptionViolationHandler;
-	}
+    public function setUp()
+    {
+        $this->handler = new ExceptionViolationHandler;
+    }
 
-	/**
-	 * @covers BehEh\Flaps\Violation\ExceptionViolationHandler::handleViolation
-	 * @expectedException BehEh\Flaps\Violation\ThrottlingViolationException
-	 */
-	public function testHandleViolation() {
-		$this->handler->handleViolation();
-	}
+    /**
+     * @covers BehEh\Flaps\Violation\ExceptionViolationHandler::handleViolation
+     * @expectedException BehEh\Flaps\Violation\ThrottlingViolationException
+     */
+    public function testHandleViolation()
+    {
+        $this->handler->handleViolation();
+    }
 
 }

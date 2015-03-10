@@ -8,32 +8,36 @@ namespace BehEh\Flaps;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-class Flaps {
+class Flaps
+{
 
-	/**
-	 * @var StorageInterface
-	 */
-	protected $adapter;
+    /**
+     * @var StorageInterface
+     */
+    protected $adapter;
 
-	public function __construct(StorageInterface $adapter) {
-		$this->adapter = $adapter;
-	}
+    public function __construct(StorageInterface $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
-	/**
-	 * @var ViolationHandlerInterface
-	 */
-	protected $defaultViolationHandler = null;
+    /**
+     * @var ViolationHandlerInterface
+     */
+    protected $defaultViolationHandler = null;
 
-	public function setDefaultViolationHandler(ViolationHandlerInterface $violationHandler) {
-		$this->defaultViolationHandler = $violationHandler;
-	}
+    public function setDefaultViolationHandler(ViolationHandlerInterface $violationHandler)
+    {
+        $this->defaultViolationHandler = $violationHandler;
+    }
 
-	public function getFlap($name) {
-		$flap = new Flap($this->adapter, $name);
-		if($this->defaultViolationHandler !== null) {
-			$flap->setViolationHandler($this->defaultViolationHandler);
-		}
-		return $flap;
-	}
+    public function getFlap($name)
+    {
+        $flap = new Flap($this->adapter, $name);
+        if ($this->defaultViolationHandler !== null) {
+            $flap->setViolationHandler($this->defaultViolationHandler);
+        }
+        return $flap;
+    }
 
 }

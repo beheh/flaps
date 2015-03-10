@@ -8,17 +8,18 @@ namespace BehEh\Flaps;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-interface StorageInterface {
+interface StorageInterface
+{
 
-	public function setValue($key, $value);
+    public function setValue($key, $value);
 
-	public function getValue($key);
+    public function getValue($key);
 
-	public function setTimestamp($key, $timestamp);
+    public function setTimestamp($key, $timestamp);
 
-	public function getTimestamp($key);
+    public function getTimestamp($key);
 
-	public function expire($key);
+    public function expire($key);
 
-	public function expireIn($key, $seconds);
+    public function expireIn($key, $seconds);
 }

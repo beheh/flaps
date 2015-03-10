@@ -8,7 +8,8 @@ namespace BehEh\Flaps;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-interface ViolationHandlerInterface {
+interface ViolationHandlerInterface
+{
 
-	public function handleViolation();
+    public function handleViolation();
 }

@@ -62,7 +62,7 @@ use BehEh\Flaps\Violation\PassiveViolationHandler;
 $flap = $flaps->getFlap('api');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
 $flap->setViolationHandler(new PassiveViolationHandler);
-if(!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
+if (!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
 	die(json_encode(array('error' => 'too many requests')));
 }
 ```
@@ -159,7 +159,7 @@ The passive violation handler allows you to easily react to violations.
 use BehEh\Flaps\Violation\PassiveViolationHandler;
 
 $flap->setViolationHandler(new PassiveViolationHandler);
-if(!$flap->limit($identifier)) {
+if (!$flap->limit($identifier)) {
 	// violation
 }
 ```
@@ -177,7 +177,7 @@ $flap->setViolationHandler(new ExceptionViolationHandler);
 try {
 	$flap->limit($identifier); // throws ThrottlingViolationException on violation
 }
-catch(ThrottlingViolationException $e) {
+catch (ThrottlingViolationException $e) {
 	// violation
 }
 ```

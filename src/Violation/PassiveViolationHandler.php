@@ -10,10 +10,12 @@ use BehEh\Flaps\ViolationHandlerInterface;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-class PassiveViolationHandler implements ViolationHandlerInterface {
+class PassiveViolationHandler implements ViolationHandlerInterface
+{
 
-	public function handleViolation() {
-		return false;
-	}
+    public function handleViolation()
+    {
+        return false;
+    }
 
 }
