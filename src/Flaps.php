@@ -11,8 +11,7 @@ namespace BehEh\Flaps;
 class Flaps {
 
 	/**
-	 *
-	 * @var StorageInterface The storage to be used by all flaps.
+	 * @var StorageInterface
 	 */
 	protected $adapter;
 
@@ -21,8 +20,7 @@ class Flaps {
 	}
 
 	/**
-	 *
-	 * @var ViolationHandlerInterface The default violation handler to use for this set of flaps.
+	 * @var ViolationHandlerInterface
 	 */
 	protected $defaultViolationHandler = null;
 
