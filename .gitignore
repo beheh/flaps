@@ -1,3 +1,5 @@
-vendor/
-build/
-nbproject/
+vendor
+nbproject
+phpunit.xml
+composer.lock
+.DS_Store
