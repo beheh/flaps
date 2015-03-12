@@ -6,7 +6,7 @@
 [![Packagist](https://img.shields.io/packagist/v/beheh/flaps.svg?style=flat-square)](https://packagist.org/packages/beheh/flaps)
 [![Packagist](https://img.shields.io/packagist/l/beheh/flaps.svg?style=flat-square)](https://packagist.org/packages/beheh/flaps)
 
-Flaps is a fully configurable library for rate limiting requests in your PHP application.
+Flaps is a modular library for rate limiting requests in PHP applications.
 
 The library supports custom storage backends, throttling strategies and violation handlers for flexible integration into any project.
 
