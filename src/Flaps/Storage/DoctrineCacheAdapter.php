@@ -41,7 +41,7 @@ class DoctrineCacheAdapter implements StorageInterface
         if (!$this->cache->contains($key.':timestamp')) {
             return (float) 0;
         }
-        return intval($this->cache->fetch($key.':timestamp'));
+        return floatval($this->cache->fetch($key.':timestamp'));
     }
 
     public function expire($key)
@@ -50,6 +50,10 @@ class DoctrineCacheAdapter implements StorageInterface
         return $this->cache->delete($key);
     }
 
+    /**
+     *
+     * @codeCoverageIgnore
+     */
     public function expireIn($key, $seconds)
     {
         return false;
