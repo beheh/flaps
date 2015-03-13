@@ -23,19 +23,19 @@ Developed by [@beheh](https://github.com/beheh) and licensed under the ISC licen
 ```php
 use Predis\Client;
 use BehEh\Flaps\Storage\PredisStorage;
-use BehEh\Flaps\Throttling\LeakyBucketStrategy;
 use BehEh\Flaps\Flaps;
+use BehEh\Flaps\Throttling\LeakyBucketStrategy;
 
-// setup storage
+// setup with Redis as storage backend
 $storage = new PredisStorage(new Client());
 $flaps = new Flaps($storage);
 
-// rate limit login attempts by ip
-$flap = $flaps->getFlap('login');
-$flap->pushThrottlingStrategy(new LeakyBucketStrategy(3, '5s'));
+// allow 3 requests per 5 seconds
+$flaps->login->pushThrottlingStrategy(new LeakyBucketStrategy(3, '5s'));
+//or $flaps->__get('login')->pushThrottlingStrategy(...)
 
- // send "HTTP/1.1 429 Too Many Requests" and die() on violation (default)
-$flap->limit($_SERVER['REMOTE_ADDR']);
+// limit by ip (default: send "HTTP/1.1 429 Too Many Requests" and die() on violation)
+$flaps->login->limit($_SERVER['REMOTE_ADDR']);
 ```
 
 ## Why rate limit?
@@ -44,10 +44,10 @@ There are many benefits from rate limiting your web application. At any point in
 - Malicious clients trying to degrade your applications performance
 - Malicious clients bruteforcing user credentials
 - Bugged clients repeating requests over and over again
-- Automated web crawlers searching for usernames or email adresses
-- Penetration frameworks testing for sql injections and other vulnerabilities
-- Spambots attempting to register a large number of users
-- Spambots attempting to post links to malicious sites
+- Automated web crawlers enumerating usernames or email adresses
+- Penetration frameworks testing for vulnerabilities
+- Bots registering a large number of users
+- Bots spamming links to malicious sites
 
 Most of these problems can be solved in a variety of ways, for example by using a spam filter or a fully configured firewall. Rate limiting is nevertheless a basic tool for improving application security, but offers no full protection.
 
@@ -59,7 +59,7 @@ Most of these problems can be solved in a variety of ways, for example by using 
 use BehEh\Flaps\Throttling\LeakyBucketStrategy;
 use BehEh\Flaps\Violation\PassiveViolationHandler;
 
-$flap = $flaps->getFlap('api');
+$flap = $flaps->__get('api');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
 $flap->setViolationHandler(new PassiveViolationHandler);
 if (!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
@@ -72,17 +72,17 @@ if (!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
 ```php
 use BehEh\Flaps\Throttling\LeakyBucketStrategy;
 
-$flap = $flaps->getFlap('api');
-$flap->pushThrottlingStrategy(new LeakyBucketStrategy(3, '1s'));
-$flap->pushThrottlingStrategy(new LeakyBucketStrategy(10, '10s'));
+$flap = $flaps->__get('add_comment');
+$flap->pushThrottlingStrategy(new LeakyBucketStrategy(1, '30s'));
+$flap->pushThrottlingStrategy(new LeakyBucketStrategy(10, '10m'));
 $flap->limit($userid);
 ```
 
 ## Storage
 
-### Predis
+### Redis
 
-The easiest storage system to get started is Redis via Predis:
+The easiest storage system to get started is Redis (via [nrk/predis](https://github.com/nrk/predis)):
 
 ```php
 use Predis\Client;
@@ -97,7 +97,7 @@ Don't forget to `composer require predis/predis`.
 
 ### Doctrine cache
 
-You can use any of the [Doctrine caching implementations](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html) by using the `DoctrineCacheAdapter`:
+You can use any of the [Doctrine cache implementations](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html) by using the _DoctrineCacheAdapter_:
 
 ```php
 use Doctrine\Common\Cache\ApcCache;
@@ -127,7 +127,7 @@ In order to allow later requests, the bucket leaks at a fixed rate.
 ```php
 use BehEh\Flaps\Throttle\LeakyBucketStrategy;
 
-$flap->addThrottle(new LeakyBucketStrategy(60, '10m'));
+$flap->pushThrottlingStrategy(new LeakyBucketStrategy(60, '10m'));
 ```
 
 ### Custom throttling strategy
@@ -193,7 +193,7 @@ The `Flaps` object can pass a default violation handler to the flaps.
 ```php
 $flaps->setDefaultViolationHandler(new CustomViolationHandler);
 
-$loginFlap = $flaps->getFlap('login');
-$loginFlap->addThrottlingStrategy(new TimeBasedThrottlingStrategy(1, '1s'));
-$loginFlap->limit($identifier); // will use CustomViolationHandler
+$flap = $flaps->__get('login');
+$flap->addThrottlingStrategy(new TimeBasedThrottlingStrategy(1, '1s'));
+$flap->limit($identifier); // will use CustomViolationHandler
 ```
