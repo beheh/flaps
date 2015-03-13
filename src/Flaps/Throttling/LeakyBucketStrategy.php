@@ -24,7 +24,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     /**
      *
      * @param int $requests
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setRequestsPerTimeScale($requests)
     {
@@ -55,7 +55,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     /**
      *
      * @param float|string $timeScale
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setTimeScale($timeScale)
     {
@@ -85,7 +85,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
      *
      * @param int $requests The requests allowed per timeSpan
      * @param int|string $timeScale Either the amount of seconds or a string such as "10s", "5m" or "1h"
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function __construct($requests, $timeScale)
     {
@@ -125,7 +125,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
      * Returns whether the identifier exceeds it's allowed capacity.
      * @param string $identifier
      * @return boolean
-     * @throws LogicException
+     * @throws \LogicException
      */
     public function isViolator($identifier)
     {

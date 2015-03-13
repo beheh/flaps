@@ -26,11 +26,20 @@ class Flaps
      */
     protected $defaultViolationHandler = null;
 
+    /**
+     * Sets a default violation handler for flaps requested in the future.
+     * @param \BehEh\Flaps\ViolationHandlerInterface $violationHandler
+     */
     public function setDefaultViolationHandler(ViolationHandlerInterface $violationHandler)
     {
         $this->defaultViolationHandler = $violationHandler;
     }
 
+    /**
+     *
+     * @param string $name
+     * @return \BehEh\Flaps\Flap
+     */
     public function getFlap($name)
     {
         $flap = new Flap($this->adapter, $name);

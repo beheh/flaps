@@ -5,6 +5,12 @@ namespace BehEh\Flaps\Storage;
 use BehEh\Flaps\StorageInterface;
 use Doctrine\Common\Cache\Cache;
 
+/**
+ *
+ *
+ * @since 1.0
+ * @author Benedict Etzel <developer@beheh.de>
+ */
 class DoctrineCacheAdapter implements StorageInterface
 {
 

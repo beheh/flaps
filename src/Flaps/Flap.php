@@ -42,20 +42,28 @@ class Flap
      */
     protected $violationHandler = null;
 
+    /**
+     * Adds the throttling strategy to the internal list of throttling strategies.
+     * @param \BehEh\Flaps\ViolationHandlerInterface
+     */
     public function pushThrottlingStrategy(ThrottlingStrategyInterface $throttlingStrategy)
     {
         $throttlingStrategy->setStorage($this->storage);
         $this->throttlingStrategies[] = $throttlingStrategy;
     }
 
+    /**
+     * Sets the violation handler.
+     * @param \BehEh\Flaps\ViolationHandlerInterface $violationHandler
+     */
     public function setViolationHandler(ViolationHandlerInterface $violationHandler)
     {
         $this->violationHandler = $violationHandler;
     }
 
     /**
-     *
-     * @return ViolationHandlerInterface
+     * Returns the violation handler.
+     * @return \BehEh\Flaps\ViolationHandlerInterface
      */
     public function getViolationHandler()
     {
@@ -63,7 +71,7 @@ class Flap
     }
 
     /**
-     * Ensures a violation handler is set. If none is set, default to an HttpViolationHandler.
+     * Ensures a violation handler is set. If none is set, default to HttpViolationHandler.
      */
     protected function ensureViolationHandler()
     {
@@ -73,9 +81,9 @@ class Flap
     }
 
     /**
-     * the user $identifier
+     * Requests violation handling from the violation handler if identifier violates any throttling strategy.
      * @param string $identifier
-     * @return boolean
+     * @return boolean|any true, if no throttling strategy is violated, otherwise the return value of the violation handler's handleViolation
      */
     public function limit($identifier)
     {
@@ -87,7 +95,7 @@ class Flap
     }
 
     /**
-     *
+     * Checks whether the identifier violates any throttling strategy.
      * @param string $identifier
      * @return boolean
      */
