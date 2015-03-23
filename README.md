@@ -32,7 +32,7 @@ $flaps = new Flaps($storage);
 
 // allow 3 requests per 5 seconds
 $flaps->login->pushThrottlingStrategy(new LeakyBucketStrategy(3, '5s'));
-//or $flaps->__get('login')->pushThrottlingStrategy(...)
+//or $flaps->getFlap('login')->pushThrottlingStrategy(...)
 
 // limit by ip (default: send "HTTP/1.1 429 Too Many Requests" and die() on violation)
 $flaps->login->limit($_SERVER['REMOTE_ADDR']);
@@ -59,7 +59,7 @@ Most of these problems can be solved in a variety of ways, for example by using 
 use BehEh\Flaps\Throttling\LeakyBucketStrategy;
 use BehEh\Flaps\Violation\PassiveViolationHandler;
 
-$flap = $flaps->__get('api');
+$flap = $flaps->getFlap('api');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(15, '10s'));
 $flap->setViolationHandler(new PassiveViolationHandler);
 if (!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
@@ -72,7 +72,7 @@ if (!$flap->limit(filter_var(INPUT_GET, 'api_key'))) {
 ```php
 use BehEh\Flaps\Throttling\LeakyBucketStrategy;
 
-$flap = $flaps->__get('add_comment');
+$flap = $flaps->getFlap('add_comment');
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(1, '30s'));
 $flap->pushThrottlingStrategy(new LeakyBucketStrategy(10, '10m'));
 $flap->limit($userid);
@@ -193,7 +193,7 @@ The `Flaps` object can pass a default violation handler to the flaps.
 ```php
 $flaps->setDefaultViolationHandler(new CustomViolationHandler);
 
-$flap = $flaps->__get('login');
+$flap = $flaps->getFlap('login');
 $flap->addThrottlingStrategy(new TimeBasedThrottlingStrategy(1, '1s'));
 $flap->limit($identifier); // will use CustomViolationHandler
 ```
