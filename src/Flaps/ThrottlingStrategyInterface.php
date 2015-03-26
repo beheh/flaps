@@ -14,7 +14,7 @@ interface ThrottlingStrategyInterface
     /**
      * Returns whether the entity identified by $identifier violates the throttling strategy.
      * @param string $identifier the unique name of the entity
-     * @return boolean whether the named entity
+     * @return bool whether the named entity violates the constraints of this instance
      */
     public function isViolator($identifier);
 
