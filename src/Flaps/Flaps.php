@@ -1,16 +1,14 @@
 <?php
-
 namespace BehEh\Flaps;
 
 /**
- *
+ * Acts as a factory for BehEh\Flaps\Flap instances.
  * 
- * @since 1.0
+ * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
  */
 class Flaps
 {
-
     /**
      * @var StorageInterface
      */

@@ -1,22 +1,19 @@
 <?php
-
 namespace BehEh\Flaps\Throttling;
 
 use BehEh\Flaps\ThrottlingStrategyInterface;
 use BehEh\Flaps\StorageInterface;
 
 /**
+ * 
  *
- *
- * @since 1.0
+ * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
  */
 class ViolateAlwaysStrategy implements ThrottlingStrategyInterface
 {
-
     /**
      * @codeCoverageIgnore
-     * @param StorageInterface $storage
      */
     public function setStorage(StorageInterface $storage)
     {
@@ -26,11 +23,10 @@ class ViolateAlwaysStrategy implements ThrottlingStrategyInterface
     /**
      * Always returns true.
      * @param string $identifier
-     * @return boolean always true
+     * @return bool always true
      */
     public function isViolator($identifier)
     {
         return true;
     }
-
 }

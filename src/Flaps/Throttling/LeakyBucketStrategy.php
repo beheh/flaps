@@ -1,5 +1,4 @@
 <?php
-
 namespace BehEh\Flaps\Throttling;
 
 use BehEh\Flaps\ThrottlingStrategyInterface;
@@ -10,12 +9,11 @@ use LogicException;
 /**
  *
  *
- * @since 1.0
+ * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
  */
 class LeakyBucketStrategy implements ThrottlingStrategyInterface
 {
-
     /**
      * @var int
      */
@@ -55,7 +53,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     /**
      *
      * @param float|string $timeScale
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setTimeScale($timeScale)
     {
@@ -85,7 +83,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
      *
      * @param int $requests The requests allowed per timeSpan
      * @param int|string $timeScale Either the amount of seconds or a string such as "10s", "5m" or "1h"
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($requests, $timeScale)
     {
@@ -105,8 +103,8 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
 
     /**
      * Parses a time scale string such as "10s", "5m" or "1h" and returns the amount of seconds.
-     * @param string $timeScale
-     * @return float|null
+     * @param string $timeScale the time scale to parse to seconds
+     * @return float|null the number of seconds or null, if $timeScale couldn't be parsed
      */
     public static function parseTime($timeScale)
     {
@@ -124,8 +122,8 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     /**
      * Returns whether the identifier exceeds it's allowed capacity.
      * @param string $identifier
-     * @return boolean
-     * @throws \LogicException
+     * @return bool
+     * @throws LogicException
      */
     public function isViolator($identifier)
     {

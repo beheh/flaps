@@ -1,16 +1,14 @@
 <?php
-
 namespace BehEh\Flaps;
 
 /**
+ * Associates a number of throttling strategies with a storage handler and a violation handler.
  *
- *
- * @since 1.0
+ * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
  */
 class Flap
 {
-
     /**
      * @var StorageInterface
      */
@@ -83,7 +81,7 @@ class Flap
     /**
      * Requests violation handling from the violation handler if identifier violates any throttling strategy.
      * @param string $identifier
-     * @return boolean|any true, if no throttling strategy is violated, otherwise the return value of the violation handler's handleViolation
+     * @return mixed true, if no throttling strategy is violated, otherwise the return value of the violation handler's handleViolation
      */
     public function limit($identifier)
     {
@@ -97,7 +95,7 @@ class Flap
     /**
      * Checks whether the identifier violates any throttling strategy.
      * @param string $identifier
-     * @return boolean
+     * @return bool
      */
     public function isViolator($identifier)
     {
