@@ -12,7 +12,7 @@ interface ViolationHandlerInterface
     /**
      * Handles a violation by returning some value, throwing an exception and/or executing any other logic.
      * @throws \Exception
-     * @return any anything which can indicate the application why the violation occured
+     * @return mixed anything which can indicate the application why the violation occured
      */
     public function handleViolation();
 }
