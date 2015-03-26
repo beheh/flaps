@@ -11,12 +11,12 @@ use BehEh\Flaps\ViolationHandlerInterface;
  */
 class PassiveViolationHandler implements ViolationHandlerInterface
 {
-	/**
-	 * Handles a violation by returning false.
-	 * @return boolean
-	 */
-	public function handleViolation()
-	{
-		return false;
-	}
+    /**
+     * Handles a violation by returning false.
+     * @return boolean
+     */
+    public function handleViolation()
+    {
+        return false;
+    }
 }

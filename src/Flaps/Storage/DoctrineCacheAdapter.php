@@ -28,10 +28,10 @@ class DoctrineCacheAdapter implements StorageInterface
      */
     protected $cache;
 
-	/**
-	 * Sets up the adapter using the Doctrine cache implementation $cache.
-	 * @param Doctrine\Common\Cache\Cache $cache the cache implementation to use as storage backend
-	 */
+    /**
+     * Sets up the adapter using the Doctrine cache implementation $cache.
+     * @param Doctrine\Common\Cache\Cache $cache the cache implementation to use as storage backend
+     */
     public function __construct(Cache $cache)
     {
         $this->cache = $cache;
