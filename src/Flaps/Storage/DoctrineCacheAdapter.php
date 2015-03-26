@@ -1,24 +1,37 @@
 <?php
-
 namespace BehEh\Flaps\Storage;
 
 use BehEh\Flaps\StorageInterface;
 use Doctrine\Common\Cache\Cache;
 
 /**
+ * Provides a storage adapter using a Doctrine\Common\Cache\Cache implementation as backend.
  *
+ * Example using Doctrine\Common\Cache\ApcCache:
+ * <pre><code>
+ * <?php
+ * use Doctrine\Common\Cache\ApcCache;
+ * use BehEh\Flaps\Storage\DoctrineCacheAdapter;
+ * 
+ * $apc = new ApcCache();
+ * $apc->setNamespace('MyApplication');
+ * $storage = new DoctrineCacheAdapter($apc);
+ * </pre></code>
  *
- * @since 1.0
+ * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
  */
 class DoctrineCacheAdapter implements StorageInterface
 {
-
     /**
-     * @var Cache;
+     * @var Cache
      */
     protected $cache;
 
+	/**
+	 * Sets up the adapter using the Doctrine cache implementation $cache.
+	 * @param Doctrine\Common\Cache\Cache $cache the cache implementation to use as storage backend
+	 */
     public function __construct(Cache $cache)
     {
         $this->cache = $cache;
@@ -57,12 +70,10 @@ class DoctrineCacheAdapter implements StorageInterface
     }
 
     /**
-     *
      * @codeCoverageIgnore
      */
     public function expireIn($key, $seconds)
     {
         return false;
     }
-
 }
