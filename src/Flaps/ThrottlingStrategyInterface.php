@@ -1,28 +1,26 @@
 <?php
-
 namespace BehEh\Flaps;
 
 use BehEh\Flaps\StorageInterface;
 
 /**
+ * Provides methods to identify whether a named entity violates certain constraints.
  *
- *
- * @since 1.0
+ * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
  */
 interface ThrottlingStrategyInterface
 {
-
     /**
-     *
-     * @param string $identifier
-     * @return boolean
+     * Returns whether the entity identified by $identifier violates the throttling strategy.
+     * @param string $identifier the unique name of the entity
+     * @return boolean whether the named entity
      */
     public function isViolator($identifier);
 
     /**
-     *
-     * @param \BehEh\Flaps\StorageInterface $storage
+     * Sets the underlying storage system to be used by the strategy.
+     * @param BehEh\Flaps\StorageInterface $storage the storage system to use
      */
     public function setStorage(StorageInterface $storage);
 }
