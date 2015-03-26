@@ -11,10 +11,10 @@ use BehEh\Flaps\ViolationHandlerInterface;
  */
 class ExceptionViolationHandler implements ViolationHandlerInterface
 {
-	/**
-	 * Handles a violation by throwing a ThrottlingViolationException.
-	 * @throws ThrottlingViolationException
-	 */
+    /**
+     * Handles a violation by throwing a ThrottlingViolationException.
+     * @throws ThrottlingViolationException
+     */
     public function handleViolation()
     {
         throw new ThrottlingViolationException();

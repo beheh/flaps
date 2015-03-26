@@ -11,5 +11,5 @@ use RuntimeException;
  */
 class ThrottlingViolationException extends RuntimeException
 {
-	// intentionally left blank
+    // intentionally left blank
 }
