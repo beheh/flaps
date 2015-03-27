@@ -15,95 +15,95 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeScale
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::getTimeScale
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeSpan
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::getTimeSpan
      */
-    public function testSetTimeScale()
+    public function testSetTimeSpan()
     {
-        $this->strategy->setTimeScale(1);
-        $this->assertEquals(1, $this->strategy->getTimeScale());
-        $this->strategy->setTimeScale(2);
-        $this->assertEquals(2, $this->strategy->getTimeScale());
-        $this->strategy->setTimeScale(2.5);
-        $this->assertEquals(2.5, $this->strategy->getTimeScale());
-        $this->strategy->setTimeScale(2.1);
-        $this->assertEquals(2.1, $this->strategy->getTimeScale());
-        $this->strategy->setTimeScale(2.9);
-        $this->assertEquals(2.9, $this->strategy->getTimeScale());
-        $this->strategy->setTimeScale('1m');
-        $this->assertEquals(60, $this->strategy->getTimeScale());
+        $this->strategy->setTimeSpan(1);
+        $this->assertEquals(1, $this->strategy->getTimeSpan());
+        $this->strategy->setTimeSpan(2);
+        $this->assertEquals(2, $this->strategy->getTimeSpan());
+        $this->strategy->setTimeSpan(2.5);
+        $this->assertEquals(2.5, $this->strategy->getTimeSpan());
+        $this->strategy->setTimeSpan(2.1);
+        $this->assertEquals(2.1, $this->strategy->getTimeSpan());
+        $this->strategy->setTimeSpan(2.9);
+        $this->assertEquals(2.9, $this->strategy->getTimeSpan());
+        $this->strategy->setTimeSpan('1m');
+        $this->assertEquals(60, $this->strategy->getTimeSpan());
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeScale
-     * @expectedException \InvalidArgumentException
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeSpan
+     * @expectedException InvalidArgumentException
      */
-    public function testSetTimeScaleWithZero()
+    public function testSetTimeSpanWithZero()
     {
-        $this->strategy->setTimeScale(0);
+        $this->strategy->setTimeSpan(0);
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeScale
-     * @expectedException \InvalidArgumentException
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeSpan
+     * @expectedException InvalidArgumentException
      */
-    public function testSetTimeScaleWithNegative()
+    public function testSetTimeSpanWithNegative()
     {
-        $this->strategy->setTimeScale(-1);
+        $this->strategy->setTimeSpan(-1);
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeScale
-     * @expectedException \InvalidArgumentException
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setTimeSpan
+     * @expectedException InvalidArgumentException
      */
-    public function testSetTimeScaleWithArray()
+    public function testSetTimeSpanWithArray()
     {
-        $this->strategy->setTimeScale(array());
+        $this->strategy->setTimeSpan(array());
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeScale
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::getRequestsPerTimeScale
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeSpan
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::getRequestsPerTimeSpan
      */
-    public function testSetRequestsPerTimeScale()
+    public function testSetRequestsPerTimeSpan()
     {
-        $this->strategy->setRequestsPerTimeScale(1);
-        $this->assertEquals(1, $this->strategy->getRequestsPerTimeScale());
-        $this->strategy->setRequestsPerTimeScale(2);
-        $this->assertEquals(2, $this->strategy->getRequestsPerTimeScale());
-        $this->strategy->setRequestsPerTimeScale(2.5);
-        $this->assertEquals(2, $this->strategy->getRequestsPerTimeScale());
-        $this->strategy->setRequestsPerTimeScale(2.1);
-        $this->assertEquals(2, $this->strategy->getRequestsPerTimeScale());
-        $this->strategy->setRequestsPerTimeScale(2.9);
-        $this->assertEquals(2, $this->strategy->getRequestsPerTimeScale());
+        $this->strategy->setRequestsPerTimeSpan(1);
+        $this->assertEquals(1, $this->strategy->getRequestsPerTimeSpan());
+        $this->strategy->setRequestsPerTimeSpan(2);
+        $this->assertEquals(2, $this->strategy->getRequestsPerTimeSpan());
+        $this->strategy->setRequestsPerTimeSpan(2.5);
+        $this->assertEquals(2, $this->strategy->getRequestsPerTimeSpan());
+        $this->strategy->setRequestsPerTimeSpan(2.1);
+        $this->assertEquals(2, $this->strategy->getRequestsPerTimeSpan());
+        $this->strategy->setRequestsPerTimeSpan(2.9);
+        $this->assertEquals(2, $this->strategy->getRequestsPerTimeSpan());
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeScale
-     * @expectedException \InvalidArgumentException
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeSpan
+     * @expectedException InvalidArgumentException
      */
-    public function testSetRequestsPerTimeScaleWithZero()
+    public function testSetRequestsPerTimeSpanWithZero()
     {
-        $this->strategy->setRequestsPerTimeScale(0);
+        $this->strategy->setRequestsPerTimeSpan(0);
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeScale
-     * @expectedException \InvalidArgumentException
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeSpan
+     * @expectedException InvalidArgumentException
      */
-    public function testSetRequestsPerTimeScaleWithNegative()
+    public function testSetRequestsPerTimeSpanWithNegative()
     {
-        $this->strategy->setRequestsPerTimeScale(-1);
+        $this->strategy->setRequestsPerTimeSpan(-1);
     }
 
     /**
-     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeScale
-     * @expectedException \InvalidArgumentException
+     * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::setRequestsPerTimeSpan
+     * @expectedException InvalidArgumentException
      */
-    public function testSetRequestsPerTimeScaleWithArray()
+    public function testSetRequestsPerTimeSpanWithArray()
     {
-        $this->strategy->setRequestsPerTimeScale(array());
+        $this->strategy->setRequestsPerTimeSpan(array());
     }
 
     /**
@@ -127,7 +127,7 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::isViolator
-     * @expectedException \LogicException
+     * @expectedException LogicException
      */
     public function testIsViolatorWithoutStorage()
     {
@@ -137,7 +137,7 @@ class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers BehEh\Flaps\Throttling\LeakyBucketStrategy::isViolator
-     * @expectedException \LogicException
+     * @expectedException LogicException
      */
     public function testIsViolatorWithZeroRate()
     {

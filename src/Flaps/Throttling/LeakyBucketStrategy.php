@@ -7,7 +7,10 @@ use BehEh\Flaps\StorageInterface;
 use LogicException;
 
 /**
- *
+ * This strategy allows a certain number of requests by an entity in a specific timespan.
+ * Additionally, once at least one request per timespan is tracked, the number of requests
+ * will be continuously reduced so that after the duration specified by timespan the specified
+ * number of requests are allowed again.
  *
  * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
@@ -17,78 +20,80 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     /**
      * @var int
      */
-    protected $requestsPerTimeScale;
+    protected $requestsPerTimeSpan;
 
     /**
-     *
+     * Sets the maximum number of requests allowed per timespan for a single entity.
      * @param int $requests
      * @throws \InvalidArgumentException
      */
-    public function setRequestsPerTimeScale($requests)
+    public function setRequestsPerTimeSpan($requests)
     {
         if (!is_numeric($requests)) {
-            throw new InvalidArgumentException('requests per timescale is not numeric');
+            throw new InvalidArgumentException('requests per timespan is not numeric');
         }
         $requests = (int) $requests;
         if ($requests < 1) {
-            throw new InvalidArgumentException('requests per timescale cannot be smaller than 1');
+            throw new InvalidArgumentException('requests per timespan cannot be smaller than 1');
         }
-        $this->requestsPerTimeScale = $requests;
+        $this->requestsPerTimeSpan = $requests;
     }
 
     /**
-     *
+     * Returns the previously set number of requests per timespan.
      * @return int
      */
-    public function getRequestsPerTimeScale()
+    public function getRequestsPerTimeSpan()
     {
-        return $this->requestsPerTimeScale;
+        return $this->requestsPerTimeSpan;
     }
 
     /**
      * @var float
      */
-    protected $timeScale;
+    protected $timeSpan;
 
     /**
-     *
-     * @param float|string $timeScale
+     * Sets the timespan in which the defined number of requests is allowed per single entity.
+     * @param float|string $timeSpan
      * @throws InvalidArgumentException
      */
-    public function setTimeScale($timeScale)
+    public function setTimeSpan($timeSpan)
     {
-        if (is_string($timeScale)) {
-            $timeScale = self::parseTime($timeScale);
+        if (is_string($timeSpan)) {
+            $timeSpan = self::parseTime($timeSpan);
         }
-        if (!is_numeric($timeScale)) {
-            throw new InvalidArgumentException('time scale is not numeric');
+        if (!is_numeric($timeSpan)) {
+            throw new InvalidArgumentException('timespan is not numeric');
         }
-        $timeScale = (float) $timeScale;
-        if ($timeScale <= 0) {
-            throw new InvalidArgumentException('time scale cannot be 0 or less');
+        $timeSpan = floatval($timeSpan);
+        if ($timeSpan <= 0) {
+            throw new InvalidArgumentException('timespan cannot be 0 or less');
         }
-        $this->timeScale = $timeScale;
+        $this->timeSpan = $timeSpan;
     }
 
     /**
-     *
+     * Returns the previously set timespan.
      * @return float
      */
-    public function getTimeScale()
+    public function getTimeSpan()
     {
-        return (float) $this->timeScale;
+        return (float) $this->timeSpan;
     }
 
     /**
-     *
-     * @param int $requests The requests allowed per timeSpan
-     * @param int|string $timeScale Either the amount of seconds or a string such as "10s", "5m" or "1h"
+     * Sets the strategy up with $requests allowed per $timeSpan
+     * @param int $requests the requests allowed per time span
+     * @param int|string $timeSpan tither the amount of seconds or a string such as "10s", "5m" or "1h"
      * @throws InvalidArgumentException
+     * @see LeakyBucketStrategy::setRequestsPerTimeSpan
+     * @see LeakyBucketStrategy::setTimeSpan
      */
-    public function __construct($requests, $timeScale)
+    public function __construct($requests, $timeSpan)
     {
-        $this->setRequestsPerTimeScale($requests);
-        $this->setTimeScale($timeScale);
+        $this->setRequestsPerTimeSpan($requests);
+        $this->setTimeSpan($timeSpan);
     }
 
     /**
@@ -102,28 +107,29 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     }
 
     /**
-     * Parses a time scale string such as "10s", "5m" or "1h" and returns the amount of seconds.
-     * @param string $timeScale the time scale to parse to seconds
-     * @return float|null the number of seconds or null, if $timeScale couldn't be parsed
+     * Parses a timespan string such as "10s", "5m" or "1h" and returns the amount of seconds.
+     * @param string $timeSpan the time span to parse to seconds
+     * @return float|null the number of seconds or null, if $timeSpan couldn't be parsed
      */
-    public static function parseTime($timeScale)
+    public static function parseTime($timeSpan)
     {
         $times = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 86400, 'w' => 604800);
         $matches = array();
-        if (is_numeric($timeScale)) {
-            return $timeScale;
+        if (is_numeric($timeSpan)) {
+            return $timeSpan;
         }
-        if (preg_match('/^((\d+)?(\.\d+)?)('.implode('|', array_keys($times)).')$/', $timeScale, $matches)) {
+        if (preg_match('/^((\d+)?(\.\d+)?)('.implode('|', array_keys($times)).')$/',
+                $timeSpan, $matches)) {
             return floatval($matches[1]) * $times[$matches[4]];
         }
         return null;
     }
 
     /**
-     * Returns whether the identifier exceeds it's allowed capacity.
-     * @param string $identifier
-     * @return bool
-     * @throws LogicException
+     * Returns whether entity exceeds it's allowed request capacity with this request.
+     * @param string $identifier the identifer of the entity to check
+     * @return bool true if this requests exceeds the number of requests allowed
+     * @throws LogicException if no storage has been set
      */
     public function isViolator($identifier)
     {
@@ -134,7 +140,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
         $time = microtime(true);
         $timestamp = $time;
 
-        $rate = (float) $this->requestsPerTimeScale / $this->timeScale;
+        $rate = (float) $this->requestsPerTimeSpan / $this->timeSpan;
         $identifier = 'leaky:'.sha1($rate.$identifier);
 
         $requestCount = $this->storage->getValue($identifier);
@@ -148,7 +154,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
             }
         }
 
-        if ($requestCount + 1 > $this->requestsPerTimeScale) {
+        if ($requestCount + 1 > $this->requestsPerTimeSpan) {
             return true;
         }
 
@@ -161,5 +167,4 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
 
         return false;
     }
-
 }
