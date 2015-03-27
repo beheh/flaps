@@ -5,7 +5,8 @@ use BehEh\Flaps\ThrottlingStrategyInterface;
 use BehEh\Flaps\StorageInterface;
 
 /**
- * 
+ * This strategy will always be violated by identifying all entities as violators.
+ * A storage backend does not have to be set. Useful for testing ViolationHandlers.
  *
  * @since 0.1
  * @author Benedict Etzel <developer@beheh.de>
@@ -22,7 +23,7 @@ class ViolateAlwaysStrategy implements ThrottlingStrategyInterface
 
     /**
      * Always returns true.
-     * @param string $identifier
+     * @param string $identifier unused
      * @return bool always true
      */
     public function isViolator($identifier)
