@@ -1,6 +1,8 @@
 <?php
 namespace BehEh\Flaps;
 
+use Violation\HttpViolationHandler;
+
 /**
  * Associates a number of throttling strategies with a storage handler and a violation handler.
  *
@@ -42,7 +44,7 @@ class Flap
 
     /**
      * Adds the throttling strategy to the internal list of throttling strategies.
-     * @param \BehEh\Flaps\ViolationHandlerInterface
+     * @param BehEh\Flaps\ViolationHandlerInterface
      */
     public function pushThrottlingStrategy(ThrottlingStrategyInterface $throttlingStrategy)
     {
@@ -52,7 +54,7 @@ class Flap
 
     /**
      * Sets the violation handler.
-     * @param \BehEh\Flaps\ViolationHandlerInterface $violationHandler
+     * @param BehEh\Flaps\ViolationHandlerInterface $violationHandler
      */
     public function setViolationHandler(ViolationHandlerInterface $violationHandler)
     {
@@ -61,7 +63,7 @@ class Flap
 
     /**
      * Returns the violation handler.
-     * @return \BehEh\Flaps\ViolationHandlerInterface
+     * @return BehEh\Flaps\ViolationHandlerInterface
      */
     public function getViolationHandler()
     {
@@ -74,7 +76,7 @@ class Flap
     protected function ensureViolationHandler()
     {
         if ($this->violationHandler === null) {
-            $this->violationHandler = new Violation\HttpViolationHandler();
+            $this->violationHandler = new HttpViolationHandler();
         }
     }
 
