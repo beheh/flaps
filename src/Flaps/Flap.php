@@ -14,7 +14,7 @@ class Flap
     /**
      * @var StorageInterface
      */
-    protected $storage;
+    protected $defaultStorage;
 
     /**
      * @var string
@@ -26,10 +26,14 @@ class Flap
      * @param StorageInterface $storage
      * @param string $name
      */
-    public function __construct(StorageInterface $storage, $name)
+    public function __construct($name)
     {
-        $this->storage = $storage;
         $this->name = $name;
+    }
+
+    public function setDefaultStorage(StorageInterface $defaultStorage)
+    {
+        $this->defaultStorage = $defaultStorage;
     }
 
     /**
@@ -40,7 +44,7 @@ class Flap
     /**
      * @var ViolationHandlerInterface
      */
-    protected $violationHandler = null;
+    protected $violationHandler;
 
     /**
      * Adds the throttling strategy to the internal list of throttling strategies.
@@ -48,7 +52,6 @@ class Flap
      */
     public function pushThrottlingStrategy(ThrottlingStrategyInterface $throttlingStrategy)
     {
-        $throttlingStrategy->setStorage($this->storage);
         $this->throttlingStrategies[] = $throttlingStrategy;
     }
 

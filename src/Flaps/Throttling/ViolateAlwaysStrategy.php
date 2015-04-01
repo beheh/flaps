@@ -15,15 +15,6 @@ class ViolateAlwaysStrategy implements ThrottlingStrategyInterface
 {
 
     /**
-     * @codeCoverageIgnore
-     * @param StorageInterface $storage
-     */
-    public function setStorage(StorageInterface $storage)
-    {
-        return;
-    }
-
-    /**
      * Always returns true.
      * @param string $identifier
      * @return boolean always true

@@ -1,5 +1,3 @@
 vendor
-nbproject
 phpunit.xml
 composer.lock
-.DS_Store

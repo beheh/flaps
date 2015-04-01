@@ -2,7 +2,6 @@
 
 namespace BehEh\Flaps\Throttling;
 
-use BehEh\Flaps\ThrottlingStrategyInterface;
 use InvalidArgumentException;
 use BehEh\Flaps\StorageInterface;
 use LogicException;
@@ -13,7 +12,7 @@ use LogicException;
  * @since 1.0
  * @author Benedict Etzel <developer@beheh.de>
  */
-class LeakyBucketStrategy implements ThrottlingStrategyInterface
+class LeakyBucketStrategy extends PersistentThrottlingStrategy
 {
 
     /**
@@ -91,16 +90,6 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     {
         $this->setRequestsPerTimeScale($requests);
         $this->setTimeScale($timeScale);
-    }
-
-    /**
-     * @var StorageInterface
-     */
-    protected $storage;
-
-    public function setStorage(StorageInterface $storage)
-    {
-        $this->storage = $storage;
     }
 
     /**
