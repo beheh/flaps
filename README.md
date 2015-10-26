@@ -134,11 +134,11 @@ $flap->pushThrottlingStrategy(new LeakyBucketStrategy(60, '10m'));
 
 Once again, you can supply your own throttling strategy by implementing _BehEh\Flaps\ThrottlingStrategyInterface_.
 
-## Violation handler
+## Violation handlers
 
 You can handle violations either using one of the included handlers or by writing your own.
 
-## HTTP violation handler
+### HTTP violation handler
 
 The HTTP violation handler is the most basic violation handler, recommended for simple scripts.
 It simply sends the correct HTTP header (status code 429) and die()s. This is not recommended for any larger application and should be replaced by one of the more customizable handlers.
@@ -150,7 +150,7 @@ $flap->setViolationHandler(new HttpViolationHandler);
 $flap->limit($identifier);  // send "HTTP/1.1 429 Too Many Requests" and die() on violation
 ```
 
-## Passive violation handler
+### Passive violation handler
 
 The passive violation handler allows you to easily react to violations.
 `limit()` will return false if the requests violates any throttling strategy, so you are able to log the request or return a custom error page.
