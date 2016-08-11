@@ -33,18 +33,18 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testValue()
     {
-        $this->assertFalse($this->client->exists('key'));
+        $this->assertEquals(0, $this->client->exists('key'));
         $this->assertSame(0, $this->storage->getValue('key'));
 
         $this->storage->setValue('key', 1);
-        $this->assertTrue($this->client->exists('key'));
+        $this->assertEquals(1, $this->client->exists('key'));
         $this->assertSame(1, $this->storage->getValue('key'));
 
         $this->storage->setValue('key', 5);
         $this->assertSame(5, $this->storage->getValue('key'));
 
         $this->storage->expire('key');
-        $this->assertFalse($this->client->exists('key'));
+        $this->assertEquals(0, $this->client->exists('key'));
     }
 
     /**
@@ -54,14 +54,14 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testTimestamp()
     {
-        $this->assertFalse($this->client->exists('key'));
+        $this->assertEquals(0, $this->client->exists('key'));
         $this->assertSame(0.0, $this->storage->getTimestamp('key'));
 
         $this->storage->setTimestamp('key', 1425829426.0);
         $this->assertSame(1425829426.0, $this->storage->getTimestamp('key'));
 
         $this->storage->expire('key');
-        $this->assertFalse($this->client->exists('key:timestamp'));
+        $this->assertEquals(0, $this->client->exists('key:timestamp'));
     }
 
     /**
@@ -69,21 +69,21 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testExpire()
     {
-        $this->assertFalse($this->client->exists('key'));
-        $this->assertFalse($this->client->exists('key:timestamp'));
+        $this->assertEquals(0, $this->client->exists('key'));
+        $this->assertEquals(0, $this->client->exists('key:timestamp'));
 
         $this->storage->setValue('key', 1);
         $this->storage->setTimestamp('key', 1425829426.0);
 
-        $this->assertTrue($this->client->exists('key'));
-        $this->assertTrue($this->client->exists('key:timestamp'));
+        $this->assertEquals(1, $this->client->exists('key'));
+        $this->assertEquals(1, $this->client->exists('key:timestamp'));
 
-        $this->assertTrue($this->storage->expire('key'));
+        $this->assertEquals(1, $this->storage->expire('key'));
 
-        $this->assertFalse($this->client->exists('key'));
-        $this->assertFalse($this->client->exists('key:timestamp'));
+        $this->assertEquals(0, $this->client->exists('key'));
+        $this->assertEquals(0, $this->client->exists('key:timestamp'));
 
-        $this->assertFalse($this->storage->expire('key'));
+        $this->assertEquals(0, $this->storage->expire('key'));
     }
 
     /**
@@ -91,21 +91,21 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testExpireIn()
     {
-        $this->assertFalse($this->client->exists('key'));
-        $this->assertFalse($this->client->exists('key:timestamp'));
+        $this->assertEquals(0, $this->client->exists('key'));
+        $this->assertEquals(0, $this->client->exists('key:timestamp'));
 
         $this->storage->setValue('key', 1);
         $this->storage->setTimestamp('key', 1425829426.0);
 
-        $this->assertTrue($this->client->exists('key'));
-        $this->assertTrue($this->client->exists('key:timestamp'));
+        $this->assertEquals(1, $this->client->exists('key'));
+        $this->assertEquals(1, $this->client->exists('key:timestamp'));
 
-        $this->assertTrue($this->storage->expireIn('key', 0));
+        $this->assertEquals(1, $this->storage->expireIn('key', 0));
 
-        $this->assertFalse($this->client->exists('key'));
-        $this->assertFalse($this->client->exists('key:timestamp'));
+        $this->assertEquals(0, $this->client->exists('key'));
+        $this->assertEquals(0, $this->client->exists('key:timestamp'));
 
-        $this->assertFalse($this->storage->expireIn('key', 0));
+        $this->assertEquals(0, $this->storage->expireIn('key', 0));
     }
 
     protected function tearDown()
