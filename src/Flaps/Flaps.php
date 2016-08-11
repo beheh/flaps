@@ -25,7 +25,7 @@ class Flaps
 
     /**
      * Sets a default violation handler for flaps created in the future.
-     * @param BehEh\Flaps\ViolationHandlerInterface $violationHandler
+     * @param \BehEh\Flaps\ViolationHandlerInterface $violationHandler
      */
     public function setDefaultViolationHandler(ViolationHandlerInterface $violationHandler)
     {
@@ -35,7 +35,7 @@ class Flaps
     /**
      * Creates a new Flap and returns it, setting default violation handler.,
      * @param string $name the name of the flap
-     * @return BehEh\Flaps\Flap the created flap
+     * @return \BehEh\Flaps\Flap the created flap
      */
     public function getFlap($name)
     {
@@ -49,7 +49,7 @@ class Flaps
     /**
      * Creates a new Flap and returns it, setting default violation handler.,
      * @param string $name the name of the flap
-     * @return BehEh\Flaps\Flap
+     * @return \BehEh\Flaps\Flap
      * @see BehEh\Flaps\Flaps::getFlap
      */
     public function __get($name)

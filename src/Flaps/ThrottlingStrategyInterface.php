@@ -20,7 +20,7 @@ interface ThrottlingStrategyInterface
 
     /**
      * Sets the underlying storage system to be used by the strategy.
-     * @param BehEh\Flaps\StorageInterface $storage the storage system to use
+     * @param \BehEh\Flaps\StorageInterface $storage the storage system to use
      */
     public function setStorage(StorageInterface $storage);
 }
