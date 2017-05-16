@@ -46,6 +46,15 @@ class DoctrineCacheAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers BehEh\Flaps\Storage\DoctrineCacheAdapter::incrementValue
+     */
+    public function testIncrementValue()
+    {
+        $this->setExpectedExceptionRegExp('Exception', '/not implemented/');
+        $this->storage->incrementValue('key');
+    }
+
+    /**
      * @covers BehEh\Flaps\Storage\DoctrineCacheAdapter::setTimestamp
      * @covers BehEh\Flaps\Storage\DoctrineCacheAdapter::getTimestamp
      * @covers BehEh\Flaps\Storage\DoctrineCacheAdapter::expire

@@ -19,6 +19,14 @@ interface StorageInterface
     public function setValue($key, $value);
 
     /**
+     * Increments the number stored at $key by one.
+     * If the key does not exist, it is set to 0 before performing the operation.
+     * @param string $key the unique key to increment
+     * @return int the value associated with the key after the increment
+     */
+    public function incrementValue($key);
+
+    /**
      * Returns the value identified by $key in the storage backend.
      * @param string $key the unique key to return the value from
      * @return int the value associated with the key or 0, in none has been set

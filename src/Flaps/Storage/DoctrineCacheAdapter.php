@@ -42,6 +42,11 @@ class DoctrineCacheAdapter implements StorageInterface
         $this->cache->save($key, intval($value));
     }
 
+    public function incrementValue($key)
+    {
+        throw new \Exception('incrementValue() is not implemented for DoctrineCacheAdapter');
+    }
+
     public function getValue($key)
     {
         if (!$this->cache->contains($key)) {

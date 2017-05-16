@@ -22,6 +22,14 @@ class Storage implements StorageInterface
         $this->values[$key] = $value;
     }
 
+    public function incrementValue($key)
+    {
+        $value = $this->getValue($key) + 1;
+        $this->setValue($key, $value);
+
+        return $value;
+    }
+
     public function getValue($key)
     {
         return isset($this->values[$key]) ? $this->values[$key] : 0;

@@ -72,6 +72,11 @@ class PredisStorage implements StorageInterface
         $this->client->set($this->prefixKey($key), intval($value));
     }
 
+    public function incrementValue($key)
+    {
+        return intval($this->client->incr($this->prefixKey($key)));
+    }
+
     public function getValue($key)
     {
         return intval($this->client->get($this->prefixKey($key)));

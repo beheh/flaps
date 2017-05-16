@@ -28,6 +28,7 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers BehEh\Flaps\Storage\PredisStorage::setValue
+     * @covers BehEh\Flaps\Storage\PredisStorage::incrementValue
      * @covers BehEh\Flaps\Storage\PredisStorage::getValue
      * @covers BehEh\Flaps\Storage\PredisStorage::expire
      */
@@ -39,6 +40,9 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
         $this->storage->setValue('key', 1);
         $this->assertEquals(1, $this->client->exists('key'));
         $this->assertSame(1, $this->storage->getValue('key'));
+
+        $this->storage->incrementValue('key');
+        $this->assertSame(2, $this->storage->getValue('key'));
 
         $this->storage->setValue('key', 5);
         $this->assertSame(5, $this->storage->getValue('key'));
