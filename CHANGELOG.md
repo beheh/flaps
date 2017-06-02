@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Added EditorConfig (http://editorconfig.org/)
+- Added an incrementValue to Storage adapters (#6, @regularjack)
 
 ## [0.1.1] - 2016-08-11
+### Changed
 - Update phpdoc (#3, @Icewild)
-- Fix tests (@Icewild)
+
+### Fixed
+- Tests (@Icewild)
 
 ## v0.1.0 - 2015-03-29
 - Initial release
