@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added EditorConfig (http://editorconfig.org/)
 - Added an incrementValue to Storage adapters (#6, @regularjack)
 
+### Removed
+- Automated tests for PHP 5.3 and hhvm
+
 ## [0.1.1] - 2016-08-11
 ### Changed
 - Update phpdoc (#3, @Icewild)

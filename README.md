@@ -14,7 +14,7 @@ Developed by [@beheh](https://github.com/beheh) and licensed under the ISC licen
 
 ## Requirements
 
-- PHP 5.3 or newer
+- PHP 5.4 or newer
 - Persistent-ish storage (e.g. Redis, APC or anything supported by _[Doctrine\Cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html)_)
 - Composer
 
