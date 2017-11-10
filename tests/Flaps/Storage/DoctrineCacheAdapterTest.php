@@ -2,10 +2,11 @@
 
 namespace BehEh\Flaps\Storage;
 
+use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\ArrayCache;
 
-class DoctrineCacheAdapterTest extends \PHPUnit_Framework_TestCase
+class DoctrineCacheAdapterTest extends TestCase
 {
 
     /**

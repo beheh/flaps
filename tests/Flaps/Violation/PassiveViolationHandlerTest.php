@@ -2,7 +2,9 @@
 
 namespace BehEh\Flaps\Violation;
 
-class PassiveViolationHandlerTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class PassiveViolationHandlerTest extends TestCase
 {
 
     /**

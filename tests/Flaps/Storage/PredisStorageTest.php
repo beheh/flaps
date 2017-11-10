@@ -3,8 +3,9 @@
 namespace BehEh\Flaps\Storage;
 
 use Predis\Client;
+use PHPUnit\Framework\TestCase;
 
-class PredisStorageTest extends \PHPUnit_Framework_TestCase
+class PredisStorageTest extends TestCase
 {
 
     /**

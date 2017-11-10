@@ -2,9 +2,10 @@
 
 namespace BehEh\Flaps\Throttling;
 
+use PHPUnit\Framework\TestCase;
 use BehEh\Flaps\Mock\Storage as MockStorage;
 
-class LeakyBucketStrategyTest extends \PHPUnit_Framework_TestCase
+class LeakyBucketStrategyTest extends TestCase
 {
 
     protected $strategy;
