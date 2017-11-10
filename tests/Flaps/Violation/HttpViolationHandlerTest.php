@@ -2,7 +2,9 @@
 
 namespace BehEh\Flaps\Violation;
 
-class HttpViolationHandlerTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class HttpViolationHandlerTest extends TestCase
 {
 
     /**

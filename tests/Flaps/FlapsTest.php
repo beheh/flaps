@@ -2,10 +2,11 @@
 
 namespace BehEh\Flaps;
 
+use PHPUnit\Framework\TestCase;
 use BehEh\Flaps\Mock\Storage as MockStorage;
 use BehEh\Flaps\Mock\ViolationHandler as MockViolationHandler;
 
-class FlapsTest extends \PHPUnit_Framework_TestCase
+class FlapsTest extends TestCase
 {
 
     /**
