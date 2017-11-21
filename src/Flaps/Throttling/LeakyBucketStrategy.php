@@ -126,7 +126,7 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
     }
 
     /**
-     * Returns whether entity exceeds it's allowed request capacity with this request.
+     * Returns whether entity exceeds its allowed request capacity with this request.
      * @param string $identifier the identifer of the entity to check
      * @return bool true if this requests exceeds the number of requests allowed
      * @throws LogicException if no storage has been set
@@ -137,34 +137,39 @@ class LeakyBucketStrategy implements ThrottlingStrategyInterface
             throw new LogicException('no storage set');
         }
 
+        $toCountOverflows = true;
+
         $time = microtime(true);
         $timestamp = $time;
+        $toBlock = false;
 
         $rate = (float) $this->requestsPerTimeSpan / $this->timeSpan;
         $identifier = 'leaky:'.sha1($rate.$identifier);
 
         $requestCount = $this->storage->getValue($identifier);
-        if ($requestCount > 0) {
-            $secondsSince = $time - $this->storage->getTimestamp($identifier);
-            $reduceBy = floor($secondsSince * $rate);
-            $unfinishedSeconds = fmod($secondsSince, $rate);
-            $requestCount = max($requestCount - $reduceBy, 0);
-            if ($requestCount > 0) {
-                $timestamp = $time - ($rate - $unfinishedSeconds);
-            }
+
+        $oldTimestamp = $this->storage->getTimestamp($identifier);
+        if ($requestCount === 0) {
+            $oldTimestamp = $time;
         }
 
+        $secondsSince = $time - $oldTimestamp;
+        $reduceBy = floor($this->requestsPerTimeSpan * ($secondsSince / $this->timeSpan));
+        $requestCount = max($requestCount - $reduceBy, 0);
+
         if ($requestCount + 1 > $this->requestsPerTimeSpan) {
-            return true;
+            $toBlock = true;
+            if ($toCountOverflows) {
+                return $toBlock;
+            }
         }
 
         $requestCount++;
 
         $this->storage->setValue($identifier, $requestCount);
         $this->storage->setTimestamp($identifier, $timestamp);
+        $this->storage->expireIn($identifier, $this->timeSpan - $secondsSince);
 
-        $this->storage->expireIn($identifier, $requestCount / $rate);
-
-        return false;
+        return $toBlock;
     }
 }
